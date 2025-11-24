@@ -6,13 +6,14 @@ h1 {
   margin-left: 20px;
 }
 p {
-  background: white;
+  background: beige;
   padding: 20px;
   max-width: 700px;
   margin: auto;
   border-radius: 10px;
   line-height: 1.6;
   font-size: 18px;
+  color: beige;
   box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
 
