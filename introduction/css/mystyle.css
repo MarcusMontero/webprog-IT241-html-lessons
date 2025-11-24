@@ -1,27 +1,7 @@
 body {
-background-color: lightblue;
-font-family: Arial;
+  background-color: pink;
 }
-
 h1 {
-color: navy;
-text-align: center;
-}
-
-h2 {
-color: darkblue;
-margin-top: 20px;
-}
-
-p {
-background: white;
-padding: 10px;
-border-radius: 5px;
-width: 80%;
-}
-
-.gallery-img {
-width: 200px;
-border-radius: 10px;
-margin-top: 10px;
+  color: darkblue;
+  margin-left: 20px;
 }
