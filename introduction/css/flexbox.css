@@ -1,14 +1,53 @@
+/* General settings */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+/* Header */
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Container for flex items */
 .container {
   display: flex;
-  flex-wrap: wrap;
-  background-color: LightBlue;
+  flex-wrap: wrap; /* allows items to wrap on small screens */
+  gap: 10px; /* space between items */
 }
- 
+
+/* Flex items */
 .container div {
   background-color: #f1f1f1;
-  width: 100px;
-  margin: 10px;
-  padding: 10px;
-  text-align: center;  
-  font-size: 30px;
+  padding: 20px;
+  flex: 1 1 calc(33.33% - 10px); /* 3 items per row, minus gap */
+  text-align: center;
+}
+
+/* Make images responsive */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 10px auto;
+}
+
+/* Responsive for smaller screens */
+@media screen and (max-width: 900px) {
+  .container div {
+    flex: 1 1 calc(50% - 10px); /* 2 items per row */
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .container div {
+    flex: 1 1 100%; /* 1 item per row */
+  }
 }
