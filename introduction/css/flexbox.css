@@ -7,47 +7,73 @@
 
 body {
   font-family: Arial, sans-serif;
-  padding: 20px;
+  line-height: 1.5;
 }
 
 /* Header */
 h1 {
   text-align: center;
-  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #1abc9c;
+  color: white;
 }
 
-/* Container for flex items */
+/* Container for sidebar and main */
 .container {
   display: flex;
-  flex-wrap: wrap; /* allows items to wrap on small screens */
-  gap: 10px; /* space between items */
+  flex-wrap: wrap; /* allows items to stack on small screens */
+  gap: 20px;
+  padding: 20px;
 }
 
-/* Flex items */
-.container div {
+/* Sidebar */
+.side {
+  flex: 30%;
   background-color: #f1f1f1;
   padding: 20px;
-  flex: 1 1 calc(33.33% - 10px); /* 3 items per row, minus gap */
-  text-align: center;
 }
 
-/* Make images responsive */
+/* Main content */
+.main {
+  flex: 70%;
+  background-color: white;
+  padding: 20px;
+}
+
+/* Images */
 img {
   max-width: 100%;
   height: auto;
   display: block;
-  margin: 10px auto;
+  margin: 10px 0;
 }
 
-/* Responsive for smaller screens */
+/* Flex items inside main (gallery) */
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.gallery div {
+  flex: 1 1 calc(33.33% - 10px); /* 3 items per row */
+  background-color: #ddd;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Responsive adjustments */
 @media screen and (max-width: 900px) {
-  .container div {
+  .side, .main {
+    flex: 1 1 100%; /* Stack sidebar and main on smaller screens */
+  }
+  .gallery div {
     flex: 1 1 calc(50% - 10px); /* 2 items per row */
   }
 }
 
 @media screen and (max-width: 600px) {
-  .container div {
+  .gallery div {
     flex: 1 1 100%; /* 1 item per row */
   }
 }
