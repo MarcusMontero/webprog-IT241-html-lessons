@@ -1,51 +1,72 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>My Personal Profile</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="css/flexbox.css">
-<title>WEBPROG IT241</title> 
 </head>
 <body>
 
-<h1>My Personal Profile Web page - Marcus U. Montero</h1>
+<!-- Note -->
+<div style="background:yellow;padding:5px;text-align:center;">
+  <h4>Resize the browser window to see the responsive effect.</h4>
+</div>
 
+<!-- Header -->
+<header>
+  <h1>My Personal Profile - Marcus U. Montero</h1>
+  <p>With a <b>flexible</b> layout.</p>
+</header>
+
+<!-- Navigation Bar -->
+<div class="navbar">
+  <a href="#">Home</a>
+  <a href="#">About</a>
+  <a href="#">Gallery</a>
+  <a href="#">Contact</a>
+</div>
+
+<!-- Content Container -->
 <div class="container">
   <!-- Sidebar -->
   <div class="side">
     <h2>About Me</h2>
+    <h5>Photo of me:</h5>
+    <div class="fakeimg" style="height:200px;">Image</div>
     <p>
-      (Do not include birthdate / age / contact info)<br>
       Education / Achievements:<br>
       Grade School - La Immaculada Concepcion School<br>
       High School - La Immaculada Concepcion School<br>
       Junior High - La Immaculada Concepcion School<br>
       Senior High - Colegio De San Juan De Letran<br>
       College - Asia Pacific College<br>
-      Course: Bachelor of Science in Information Technology<br>
+      Course: BSIT<br>
       IT Experience: Code Combat<br>
-      Hobbies & Interest: Basketball and Fish keeping<br>
-      Goals: To succeed in IT, stay healthy, and make my loved ones proud.
+      Hobbies: Basketball & Fish keeping<br>
+      Goals: Succeed in IT, stay healthy, make loved ones proud
     </p>
   </div>
 
-  <!-- Main content -->
+  <!-- Main Content -->
   <div class="main">
     <h2>Picture Gallery</h2>
-    <img src="0ea36ee7bc893407525f1d30b72702cb.jpg" alt="My Photo">
+    <div class="fakeimg" style="height:200px;">My Photo</div>
+    <p>Some text about my gallery..</p>
 
-    <div class="gallery">
-      <div>1</div>
-      <div>2</div>
-      <div>3</div>
-      <div>4</div>
-      <div>5</div>
-      <div>6</div>
-      <div>7</div>
-      <div>8</div>
-      <div>9</div>
-      <div>10</div>
-    </div>
+    <h2>Other Images</h2>
+    <div class="fakeimg" style="height:100px;">Image 1</div>
+    <div class="fakeimg" style="height:100px;">Image 2</div>
+    <div class="fakeimg" style="height:100px;">Image 3</div>
+    <div class="fakeimg" style="height:100px;">Image 4</div>
+    <div class="fakeimg" style="height:100px;">Image 5</div>
   </div>
 </div>
+
+<!-- Footer -->
+<footer>
+  <h2>Footer</h2>
+</footer>
 
 </body>
 </html>

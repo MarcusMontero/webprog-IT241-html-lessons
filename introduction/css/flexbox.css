@@ -11,19 +11,36 @@ body {
 }
 
 /* Header */
-h1 {
+header {
+  padding: 60px;
   text-align: center;
-  padding: 20px;
-  background-color: #1abc9c;
+  background: #1abc9c;
   color: white;
 }
 
-/* Container for sidebar and main */
+/* Navigation Bar */
+.navbar {
+  display: flex;
+  background-color: #333;
+}
+
+.navbar a {
+  color: white;
+  padding: 14px 20px;
+  text-decoration: none;
+  text-align: center;
+}
+
+.navbar a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Container for sidebar + main */
 .container {
   display: flex;
-  flex-wrap: wrap; /* allows items to stack on small screens */
+  flex-wrap: wrap;
   gap: 20px;
-  padding: 20px;
 }
 
 /* Sidebar */
@@ -40,40 +57,25 @@ h1 {
   padding: 20px;
 }
 
-/* Images */
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 10px 0;
-}
-
-/* Flex items inside main (gallery) */
-.gallery {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.gallery div {
-  flex: 1 1 calc(33.33% - 10px); /* 3 items per row */
-  background-color: #ddd;
+/* Fake image / gallery placeholder */
+.fakeimg {
+  background-color: #aaa;
+  width: 100%;
   padding: 20px;
+  margin-bottom: 10px;
   text-align: center;
 }
 
-/* Responsive adjustments */
-@media screen and (max-width: 900px) {
-  .side, .main {
-    flex: 1 1 100%; /* Stack sidebar and main on smaller screens */
-  }
-  .gallery div {
-    flex: 1 1 calc(50% - 10px); /* 2 items per row */
-  }
+/* Footer */
+footer {
+  padding: 20px;
+  text-align: center;
+  background: #ddd;
 }
 
-@media screen and (max-width: 600px) {
-  .gallery div {
-    flex: 1 1 100%; /* 1 item per row */
+/* Responsive layout for small screens */
+@media screen and (max-width: 700px) {
+  .container, .navbar {
+    flex-direction: column;
   }
 }
