@@ -1,6 +1,6 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #cfe8f5;
+  background-color: pink;
   margin: 0;
   padding: 20px;
 }
@@ -19,7 +19,7 @@ h1 {
 }
 
 .box {
-  background: #f8f8f8;
+  background: beige;
   border-radius: 12px;
   padding: 20px;
   text-align: center;
@@ -29,7 +29,6 @@ h1 {
   justify-content: center;
 }
 
-/* make the picture fit the square box */
 .picture-box {
   padding: 0;
 }
