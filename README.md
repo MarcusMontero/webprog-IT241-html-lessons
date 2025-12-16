@@ -1,1 +1,6 @@
 # webprog-IT241-html-lessons
+Goodmorning -DUENAS
+AKO SROI MONTERO IKAW SINO KA? - MONTERO
+
+
+AKO SI VINZ SZYMONE ROI V. MENDOZA
