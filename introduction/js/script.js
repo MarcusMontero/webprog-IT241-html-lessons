@@ -1,3 +1,3 @@
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("Website loaded successfully");
+  console.log("Personal profile website loaded");
 });
