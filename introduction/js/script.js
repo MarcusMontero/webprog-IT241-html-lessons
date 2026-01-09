@@ -1,2 +1,2 @@
-// Simple JS file for future enhancements
-console.log("Personal Profile Website Loaded");
+// Simple interaction for future features
+console.log("Website loaded successfully");
