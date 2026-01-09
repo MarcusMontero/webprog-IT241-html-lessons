@@ -1,3 +1,2 @@
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("Personal profile website loaded");
-});
+// Simple JS file for future enhancements
+console.log("Personal Profile Website Loaded");

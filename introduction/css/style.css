@@ -2,117 +2,97 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
+  font-family: Arial, sans-serif;
 }
 
 body {
-  background-color: #f4f6f8;
-  color: #1f2937;
+  background-color: #f4f4f4;
+  color: #222;
 }
 
-/* NAVBAR */
-.navbar {
-  background-color: #111827;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+nav {
+  background-color: #111;
+  padding: 15px;
 }
 
-.nav-container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 15px 20px;
+nav ul {
+  list-style: none;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.brand {
-  color: #e5e7eb;
-  font-weight: bold;
-  font-size: 18px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
 }
 
 nav a {
-  color: #d1d5db;
-  margin-left: 15px;
+  color: white;
   text-decoration: none;
   font-size: 14px;
 }
 
 nav a:hover {
-  color: #60a5fa;
+  text-decoration: underline;
 }
 
-/* HERO */
 .hero {
-  background: linear-gradient(135deg, #1e293b, #0f172a);
-  padding: 80px 20px;
   text-align: center;
-  color: white;
+  padding: 60px 20px;
 }
 
 .hero img {
   width: 150px;
   border-radius: 50%;
-  border: 4px solid #60a5fa;
   margin-bottom: 15px;
 }
 
-/* CARD SECTIONS */
-.card {
+section {
+  max-width: 1000px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+.section-box {
   background-color: white;
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 40px;
-  border-radius: 14px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease;
 }
 
-.card h2 {
-  margin-bottom: 15px;
-  color: #1e3a8a;
+.section-box:hover {
+  transform: translateY(-5px);
 }
 
-.card p,
-.card li {
-  line-height: 1.7;
-  font-size: 15px;
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-/* GALLERY */
+ul {
+  padding-left: 20px;
+}
+
 .gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 15px;
 }
 
 .gallery img {
   width: 100%;
-  border-radius: 10px;
-  transition: transform 0.3s ease;
+  border-radius: 8px;
 }
 
-.gallery img:hover {
-  transform: scale(1.07);
-}
-
-/* FOOTER */
 footer {
+  background-color: #111;
+  color: white;
   text-align: center;
-  padding: 25px;
-  color: #6b7280;
+  padding: 20px;
+  margin-top: 40px;
 }
 
-/* RESPONSIVE */
 @media (max-width: 768px) {
-  nav a {
-    margin-left: 8px;
-    font-size: 13px;
-  }
-
-  .card {
-    margin: 20px;
-    padding: 25px;
+  nav ul {
+    flex-direction: column;
+    align-items: center;
   }
 }
