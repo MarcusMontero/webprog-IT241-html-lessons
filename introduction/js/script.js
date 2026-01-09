@@ -1,16 +1,15 @@
-console.log("Personal Profile Website Loaded");
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("Personal profile website loaded");
 
-// Small fade-in animation on scroll
-const boxes = document.querySelectorAll(".section-box");
-
-window.addEventListener("scroll", () => {
-  boxes.forEach(box => {
-    const position = box.getBoundingClientRect().top;
-    const screenHeight = window.innerHeight;
-
-    if (position < screenHeight - 100) {
-      box.style.opacity = "1";
-      box.style.transform = "translateY(0)";
-    }
+  // Smooth scrolling for navbar links
+  const links = document.querySelectorAll("nav ul li a[href^='#']");
+  links.forEach(link => {
+    link.addEventListener("click", function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute("href"));
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth" });
+      }
+    });
   });
 });
