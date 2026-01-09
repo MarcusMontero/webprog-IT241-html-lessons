@@ -5,72 +5,113 @@
   font-family: Arial, sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background-color: #f4f4f4;
+  background-color: #f2f5f9;
   color: #222;
 }
 
+/* NAVIGATION */
 nav {
-  background-color: #111;
-  padding: 15px;
+  background-color: #0a1a33;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  color: #fff;
+  font-size: 20px;
 }
 
 nav ul {
   list-style: none;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
   gap: 15px;
 }
 
 nav a {
-  color: white;
+  color: #fff;
   text-decoration: none;
   font-size: 14px;
 }
 
 nav a:hover {
-  text-decoration: underline;
+  color: #9ecbff;
 }
 
+/* HERO */
 .hero {
+  background: linear-gradient(to right, #0a1a33, #102c57);
+  color: white;
   text-align: center;
-  padding: 60px 20px;
+  padding: 80px 20px;
 }
 
 .hero img {
-  width: 150px;
+  width: 160px;
   border-radius: 50%;
-  margin-bottom: 15px;
+  border: 4px solid white;
+  margin-bottom: 20px;
 }
 
+.hero h2 {
+  font-weight: normal;
+  margin-bottom: 5px;
+}
+
+.hero h1 {
+  font-size: 32px;
+}
+
+.hero p {
+  margin-top: 10px;
+  opacity: 0.9;
+}
+
+/* SECTIONS */
 section {
   max-width: 1000px;
-  margin: 60px auto;
+  margin: 70px auto;
   padding: 0 20px;
 }
 
 .section-box {
   background-color: white;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  padding: 35px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
   transition: transform 0.3s ease;
 }
 
 .section-box:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px);
 }
 
 h2 {
   text-align: center;
   margin-bottom: 20px;
+  color: #0a1a33;
 }
 
 ul {
   padding-left: 20px;
+  line-height: 1.8;
 }
 
+/* GALLERY */
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -79,17 +120,33 @@ ul {
 
 .gallery img {
   width: 100%;
-  border-radius: 8px;
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.gallery img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* LINKS */
+a {
+  color: #0a1a33;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* FOOTER */
 footer {
-  background-color: #111;
+  background-color: #0a1a33;
   color: white;
   text-align: center;
   padding: 20px;
-  margin-top: 40px;
 }
 
+/* RESPONSIVE */
 @media (max-width: 768px) {
   nav ul {
     flex-direction: column;
