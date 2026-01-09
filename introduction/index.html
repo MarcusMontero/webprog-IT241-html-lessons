@@ -8,39 +8,42 @@
 </head>
 <body>
 
-<nav>
-  <h1 class="logo">MM</h1>
-  <ul>
-    <li><a href="#home">Home</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#education">Education</a></li>
-    <li><a href="#course">Course</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#hobbies">Hobbies</a></li>
-    <li><a href="#goals">Goals</a></li>
-    <li><a href="#gallery">Gallery</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="resources.html">Resources</a></li>
-  </ul>
-</nav>
+<header class="navbar">
+  <div class="nav-container">
+    <span class="brand">Marcus</span>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#education">Education</a>
+      <a href="#course">Course</a>
+      <a href="#experience">Experience</a>
+      <a href="#hobbies">Hobbies</a>
+      <a href="#goals">Goals</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#contact">Contact</a>
+      <a href="resources.html">Resources</a>
+    </nav>
+  </div>
+</header>
 
-<section id="home" class="hero">
-  <img src="images/profile.jpg" alt="Profile Photo">
-  <h2>Marcus U. Montero</h2>
-  <p>BSIT Student | Web Development Enthusiast</p>
+<section class="hero">
+  <div class="hero-content">
+    <img src="images/profile.jpg" alt="Profile">
+    <h1>Marcus U. Montero</h1>
+    <p>BS Information Technology Student</p>
+  </div>
 </section>
 
-<section id="about" class="section light">
-  <h3>About Me</h3>
+<section id="about" class="card">
+  <h2>About Me</h2>
   <p>
     I am Marcus U. Montero, a Bachelor of Science in Information Technology student.
-    I enjoy learning how websites are created and how design and functionality work together.
-    This website serves as my personal profile for my Web Programming subject.
+    I enjoy learning how websites are built and understanding how design and
+    functionality work together.
   </p>
 </section>
 
-<section id="education" class="section dark">
-  <h3>Education / Achievements</h3>
+<section id="education" class="card">
+  <h2>Education / Achievements</h2>
   <ul>
     <li>Grade School – La Immaculada Concepcion School</li>
     <li>High School – La Immaculada Concepcion School</li>
@@ -49,44 +52,40 @@
   </ul>
 </section>
 
-<section id="course" class="section light">
-  <h3>Course</h3>
+<section id="course" class="card">
+  <h2>Course</h2>
   <p>Bachelor of Science in Information Technology</p>
 </section>
 
-<section id="experience" class="section dark">
-  <h3>IT Experience</h3>
+<section id="experience" class="card">
+  <h2>IT Experience</h2>
+  <p>CodeCombat – improved logic building and programming basics.</p>
+</section>
+
+<section id="hobbies" class="card">
+  <h2>Hobbies & Interests</h2>
+  <p>Basketball, fish keeping, and learning new technologies.</p>
+</section>
+
+<section id="goals" class="card">
+  <h2>Goals In Life / Dream</h2>
   <p>
-    Experience with CodeCombat which helped improve my logical thinking
-    and understanding of basic programming concepts.
+    To succeed in the IT field, stay healthy, and make my loved ones proud.
   </p>
 </section>
 
-<section id="hobbies" class="section light">
-  <h3>Hobbies & Interests</h3>
-  <p>Playing basketball, fish keeping, and exploring new technologies.</p>
-</section>
-
-<section id="goals" class="section dark">
-  <h3>Goals In Life / Dream</h3>
-  <p>
-    My goal is to succeed in the IT field, continuously improve my skills,
-    stay healthy, and support my family in the future.
-  </p>
-</section>
-
-<section id="gallery" class="section light">
-  <h3>Picture Gallery</h3>
+<section id="gallery" class="card">
+  <h2>Picture Gallery</h2>
   <div class="gallery">
-    <img src="images/profile.jpg" alt="Profile">
-    <img src="images/photo1.jpg" alt="Photo 1">
-    <img src="images/photo2.jpg" alt="Photo 2">
-    <img src="images/photo3.jpg" alt="Photo 3">
+    <img src="images/profile.jpg">
+    <img src="images/photo1.jpg">
+    <img src="images/photo2.jpg">
+    <img src="images/photo3.jpg">
   </div>
 </section>
 
-<section id="contact" class="section dark">
-  <h3>Contact</h3>
+<section id="contact" class="card">
+  <h2>Contact</h2>
   <p>Email: mumontero@student.apc.edu.ph</p>
   <p>
     GitHub:
@@ -97,7 +96,7 @@
 </section>
 
 <footer>
-  <p>© 2026 Marcus U. Montero</p>
+  © 2026 Marcus U. Montero
 </footer>
 
 <script src="js/script.js"></script>
