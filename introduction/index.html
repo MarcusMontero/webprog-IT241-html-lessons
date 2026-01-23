@@ -1,25 +1,253 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>WEBPROG IT241</title> 
-<link rel="stylesheet" href="css/mystyle.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #EBE3D5;
+            color: #2B2B2B;
+            overflow-x: hidden;
+        }
+
+        /* Grain texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"><filter id="n"><feTurbulence baseFrequency="0.9" numOctaves="3"/></filter><rect width="300" height="300" filter="url(%23n)" opacity="0.05"/></svg>');
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+        }
+
+        h1 {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(3rem, 12vw, 8rem);
+            color: #2B5F9E;
+            line-height: 0.95;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            transform: rotate(-1deg);
+            text-shadow: 3px 3px 0px rgba(43, 95, 158, 0.2);
+        }
+
+        .subtitle {
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            color: #1E4D7B;
+            font-family: 'Righteous', cursive;
+            margin-bottom: 2rem;
+            transform: rotate(1deg);
+        }
+
+        .description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #4A4A4A;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: #2B5F9E;
+            color: #EBE3D5;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            transform: rotate(-1deg);
+            transition: all 0.3s ease;
+            box-shadow: 5px 5px 0px rgba(43, 95, 158, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: rotate(-1deg) translateY(-3px);
+            box-shadow: 7px 7px 0px rgba(43, 95, 158, 0.3);
+        }
+
+        .section {
+            padding: 5rem 2rem;
+            background: #F5F0E8;
+            position: relative;
+        }
+
+        .section:nth-child(even) {
+            background: #EBE3D5;
+        }
+
+        .wave {
+            position: absolute;
+            top: -1px;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="%23EBE3D5"/></svg>');
+            background-size: cover;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Righteous', cursive;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            color: #2B5F9E;
+            margin-bottom: 3rem;
+            text-align: center;
+            transform: rotate(-1deg);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .card {
+            background: #2B5F9E;
+            color: #EBE3D5;
+            padding: 2.5rem;
+            border-radius: 15px;
+            transform: rotate(-1deg);
+            transition: transform 0.3s ease;
+            box-shadow: 5px 5px 0px rgba(43, 95, 158, 0.3);
+        }
+
+        .card:hover {
+            transform: rotate(0deg) translateY(-5px);
+        }
+
+        .card:nth-child(even) {
+            transform: rotate(1deg);
+        }
+
+        .card:nth-child(even):hover {
+            transform: rotate(0deg) translateY(-5px);
+        }
+
+        .card h3 {
+            font-family: 'Righteous', cursive;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        footer {
+            background: #1E4D7B;
+            color: #EBE3D5;
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        footer p {
+            font-size: 1.1rem;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .blob1 {
+            width: 400px;
+            height: 400px;
+            background: #2B5F9E;
+            top: 10%;
+            right: -100px;
+        }
+
+        .blob2 {
+            width: 300px;
+            height: 300px;
+            background: #1E4D7B;
+            bottom: 20%;
+            left: -80px;
+        }
+    </style>
 </head>
 <body>
+    <div class="hero">
+        <div class="blob blob1"></div>
+        <div class="blob blob2"></div>
+        <div class="hero-content">
+            <h1>Your Name</h1>
+            <p class="subtitle">Creative Developer</p>
+            <p class="description">
+                Building beautiful digital experiences with a passion for clean design and thoughtful interactions. Let's create something amazing together.
+            </p>
+            <a href="#projects" class="cta-button">View My Work</a>
+        </div>
+    </div>
 
-<h1>My Personal Profile Web page - Marcus U. Montero</h1>
-<p>
-About Me<br>
- ( Do not include birthdate / age / contact information)<br>
-Education / Achievements<br>
-Grade School - La Immaculada Concepcion School<br>
-High School - La Immaculada Concepcion School<br>
-Junior High - La Immaculada Concepcion School<br> 
-Senior High - Colegio De San Juan De Letran<br>
-College - Asia Pacific College<br>
-Course: Bachelor of Science in Information Technology<br>
-IT Experience: Code Combat<br>
-Hobbies & Interest: Basketball and Fish keeping<br>
-Goals In Life / Dream: To succeed in IT, stay healthy, and make my loved ones proud.<br>
-Picture Gallery<br>
-<img src="0ea36ee7bc893407525f1d30b72702cb.jpg">
-</p>
+    <section class="section" id="projects">
+        <div class="wave"></div>
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Project One</h3>
+                    <p>A modern web application that brings ideas to life with seamless user experience and bold visual design.</p>
+                </div>
+                <div class="card">
+                    <h3>Project Two</h3>
+                    <p>Interactive portfolio showcasing creative work with smooth animations and intuitive navigation.</p>
+                </div>
+                <div class="card">
+                    <h3>Project Three</h3>
+                    <p>E-commerce platform with custom features and a focus on accessibility and performance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <p class="description" style="font-size: 1.2rem; max-width: 800px; margin: 0 auto;">
+                I'm a passionate developer who loves bringing ideas to life through code. With a keen eye for design and attention to detail, I create websites that not only look great but provide exceptional user experiences. When I'm not coding, you'll find me exploring new design trends and learning the latest technologies.
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 Your Name. Built with passion and a retro vibe.</p>
+    </footer>
+</body>
+</html>
