@@ -435,11 +435,11 @@
             <div class="nav-container">
                 <div class="logo">Marcus</div>
                 <div class="nav-links" v-bind:class="{ active: menuOpen }">
-                    <a v-on:click="scrollTo('home')">🌅 Home</a>
-                    <a v-on:click="scrollTo('about')">🌊 About</a>
-                    <a v-on:click="scrollTo('gallery')">🐚 Gallery</a>
-                    <a v-on:click="scrollTo('guestbook')">📝 Guestbook</a>
-                    <a v-on:click="scrollTo('resources')">📚 Resources</a>
+                    <a v-on:click="scrollTo('home')">Home</a>
+                    <a v-on:click="scrollTo('about')">About</a>
+                    <a v-on:click="scrollTo('gallery')">Gallery</a>
+                    <a v-on:click="scrollTo('guestbook')">Guestbook</a>
+                    <a v-on:click="scrollTo('resources')">Resources</a>
                     <button class="theme-toggle" v-on:click="toggleTheme">
                         {{ darkMode ? '☀️' : '🌙' }}
                     </button>
@@ -472,7 +472,7 @@
 
         <section id="about" class="section-light">
             <div class="container">
-                <h2>About Me 🌊</h2>
+                <h2>About Me</h2>
                 <div class="about-grid">
                     <div class="about-card">
                         <h3>Who I Am</h3>
@@ -492,7 +492,7 @@
 
         <section id="gallery" class="section-dark-bg">
             <div class="container">
-                <h2>Coastal Gallery 🐚</h2>
+                <h2>Coastal Gallery</h2>
                 <div class="gallery-grid">
                     <div v-for="item in gallery" v-bind:key="item.id" class="gallery-item">
                         <div class="gallery-bg" v-bind:style="{ background: item.gradient }"></div>
@@ -506,7 +506,7 @@
 
         <section id="guestbook" class="section-light">
             <div class="container">
-                <h2>Leave a Footprint in the Sand 🐾</h2>
+                <h2>Leave a Footprint in the Sand</h2>
                 <p style="text-align: center; margin-bottom: 3rem; opacity: 0.75;">Share your coastal thoughts with me</p>
                 
                 <div class="guestbook-form">
@@ -525,7 +525,7 @@
                     <div class="form-group">
                         <input v-model="form.word" type="text" placeholder="One word that reminds you of the ocean">
                     </div>
-                    <button class="submit-btn" v-on:click="submitEntry">Submit 🌊</button>
+                    <button class="submit-btn" v-on:click="submitEntry">Submit</button>
                 </div>
 
                 <div v-if="entries.length > 0" class="entries">
@@ -542,7 +542,7 @@
 
         <section id="resources" class="section-dark-bg">
             <div class="container">
-                <h2>Resources 📚</h2>
+                <h2>Resources</h2>
                 <div class="resources-grid">
                     <div class="resource-card">
                         <h3>Images</h3>
