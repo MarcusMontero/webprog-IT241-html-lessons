@@ -1,291 +1,638 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X, Sun, Moon, Volume2, VolumeX, ChevronDown } from 'lucide-react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcus - Coastal Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-const CoastalPortfolio = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [isSoundOn, setIsSoundOn] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
-  const [guestbookEntries, setGuestbookEntries] = useState([]);
-  const [formData, setFormData] = useState({
-    name: '',
-    beach: '',
-    preference: 'sunrise',
-    word: ''
-  });
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+        body.light-mode {
+            background-color: #faf8f3;
+            color: #1e293b;
+        }
 
-  const galleryImages = [
-    { id: 1, caption: 'Sunset = design inspiration', color: 'from-orange-400 to-pink-500' },
-    { id: 2, caption: 'Blue tones calm my mind', color: 'from-blue-400 to-cyan-500' },
-    { id: 3, caption: 'Waves teach patience', color: 'from-teal-400 to-blue-600' },
-    { id: 4, caption: 'Golden hour magic', color: 'from-yellow-300 to-orange-400' },
-    { id: 5, caption: 'Deep ocean mystery', color: 'from-indigo-600 to-blue-800' },
-    { id: 6, caption: 'Sand textures inspire', color: 'from-amber-200 to-orange-300' }
-  ];
+        body.dark-mode {
+            background-color: #0f172a;
+            color: #f1f5f9;
+        }
 
-  const handleSubmit = () => {
-    if (formData.name && formData.beach && formData.word) {
-      setGuestbookEntries([...guestbookEntries, { ...formData, id: Date.now() }]);
-      setFormData({ name: '', beach: '', preference: 'sunrise', word: '' });
-    }
-  };
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.3s;
+            padding: 1rem 0;
+        }
 
-  const scrollToSection = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-    setActiveSection(id);
-    setIsMenuOpen(false);
-  };
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-  return (
-    <div className={`min-h-screen transition-colors duration-500 ${isDarkMode ? 'bg-slate-900 text-gray-100' : 'bg-stone-50 text-slate-800'}`}>
-      {/* Navigation */}
-      <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? (isDarkMode ? 'bg-slate-900/95 backdrop-blur-md shadow-lg' : 'bg-white/95 backdrop-blur-md shadow-lg') : 'bg-transparent'}`}>
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="text-2xl font-light tracking-wider">Marcus</div>
-            
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
-              {['home', 'about', 'gallery', 'guestbook', 'resources'].map((item) => (
-                <button
-                  key={item}
-                  onClick={() => scrollToSection(item)}
-                  className={`capitalize transition-colors hover:text-cyan-600 ${activeSection === item ? 'text-cyan-600' : ''}`}
-                >
-                  {item === 'home' ? '🌅' : item === 'about' ? '🌊' : item === 'gallery' ? '🐚' : item === 'guestbook' ? '📝' : '📚'} {item}
-                </button>
-              ))}
-              <button onClick={() => setIsDarkMode(!isDarkMode)} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-              </button>
-              <button onClick={() => setIsSoundOn(!isSoundOn)} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                {isSoundOn ? <Volume2 size={20} /> : <VolumeX size={20} />}
-              </button>
-            </div>
+        body.dark-mode nav.scrolled {
+            background: rgba(15, 23, 42, 0.95);
+        }
 
-            {/* Mobile Menu Button */}
-            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden">
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
-        </div>
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className={`md:hidden ${isDarkMode ? 'bg-slate-800' : 'bg-white'} shadow-lg`}>
-            <div className="px-4 py-4 space-y-3">
-              {['home', 'about', 'gallery', 'guestbook', 'resources'].map((item) => (
-                <button
-                  key={item}
-                  onClick={() => scrollToSection(item)}
-                  className="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded capitalize"
-                >
-                  {item}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-      </nav>
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
 
-      {/* Hero Section */}
-      <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
-        <div className={`absolute inset-0 ${isDarkMode ? 'bg-gradient-to-b from-slate-800 to-slate-900' : 'bg-gradient-to-b from-sky-100 to-blue-200'}`}>
-          <div className="absolute inset-0 opacity-30">
-            {[...Array(3)].map((_, i) => (
-              <div
-                key={i}
-                className={`absolute h-32 w-full ${isDarkMode ? 'bg-blue-900/20' : 'bg-blue-300/30'} rounded-full`}
-                style={{
-                  bottom: `${i * 20}%`,
-                  animation: `wave ${4 + i}s ease-in-out infinite`,
-                  animationDelay: `${i * 0.5}s`
-                }}
-              />
-            ))}
-          </div>
-        </div>
-        <div className="relative z-10 text-center px-4 animate-fade-in">
-          <h1 className="text-5xl md:text-7xl font-light mb-6 tracking-wide">Hi, I'm Marcus</h1>
-          <p className="text-xl md:text-2xl mb-8 font-light opacity-90">A coastal soul who loves clean code and calm design</p>
-          <button onClick={() => scrollToSection('about')} className="animate-bounce">
-            <ChevronDown size={32} className="mx-auto" />
-          </button>
-        </div>
-      </section>
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
 
-      {/* About Section */}
-      <section id="about" className={`py-20 px-4 ${isDarkMode ? 'bg-slate-800' : 'bg-white'}`}>
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-light mb-12 text-center">About Me 🌊</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="p-6 rounded-lg bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-slate-700 dark:to-slate-600">
-              <h3 className="text-xl font-medium mb-4">Who I Am</h3>
-              <p className="opacity-90">A student developer exploring the intersection of design and technology, always seeking simplicity in complexity.</p>
-            </div>
-            <div className="p-6 rounded-lg bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-700 dark:to-slate-600">
-              <h3 className="text-xl font-medium mb-4">Why the Coast</h3>
-              <p className="opacity-90">I'm most creative when things feel calm — that's why I'm drawn to beaches, minimal layouts, and clean code.</p>
-            </div>
-            <div className="p-6 rounded-lg bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-slate-700 dark:to-slate-600">
-              <h3 className="text-xl font-medium mb-4">What I Build</h3>
-              <p className="opacity-90">Thoughtful web experiences that prioritize user experience, accessibility, and aesthetic harmony.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+        .nav-links a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
 
-      {/* Gallery Section */}
-      <section id="gallery" className={`py-20 px-4 ${isDarkMode ? 'bg-slate-900' : 'bg-stone-50'}`}>
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-light mb-12 text-center">Coastal Gallery 🐚</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {galleryImages.map((img) => (
-              <div
-                key={img.id}
-                className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 aspect-square"
-              >
-                <div className={`absolute inset-0 bg-gradient-to-br ${img.color} transition-transform duration-300 group-hover:scale-110`} />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-end p-6">
-                  <p className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-light">
-                    {img.caption}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        .nav-links a:hover {
+            color: #06b6d4;
+        }
 
-      {/* Guestbook Section */}
-      <section id="guestbook" className={`py-20 px-4 ${isDarkMode ? 'bg-slate-800' : 'bg-white'}`}>
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-light mb-4 text-center">Leave a Footprint in the Sand 🐾</h2>
-          <p className="text-center mb-12 opacity-75">Share your coastal thoughts with me</p>
-          
-          <div className="mb-12 space-y-6">
-            <div>
-              <input
-                type="text"
-                placeholder="Your Name"
-                value={formData.name}
-                onChange={(e) => setFormData({...formData, name: e.target.value})}
-                className={`w-full px-4 py-3 rounded-lg ${isDarkMode ? 'bg-slate-700 text-white' : 'bg-gray-100'} focus:outline-none focus:ring-2 focus:ring-cyan-500`}
-              />
-            </div>
-            <div>
-              <input
-                type="text"
-                placeholder="What beach do you love most?"
-                value={formData.beach}
-                onChange={(e) => setFormData({...formData, beach: e.target.value})}
-                className={`w-full px-4 py-3 rounded-lg ${isDarkMode ? 'bg-slate-700 text-white' : 'bg-gray-100'} focus:outline-none focus:ring-2 focus:ring-cyan-500`}
-              />
-            </div>
-            <div>
-              <select
-                value={formData.preference}
-                onChange={(e) => setFormData({...formData, preference: e.target.value})}
-                className={`w-full px-4 py-3 rounded-lg ${isDarkMode ? 'bg-slate-700 text-white' : 'bg-gray-100'} focus:outline-none focus:ring-2 focus:ring-cyan-500`}
-              >
-                <option value="sunrise">Sunrise 🌅</option>
-                <option value="sunset">Sunset 🌇</option>
-              </select>
-            </div>
-            <div>
-              <input
-                type="text"
-                placeholder="One word that reminds you of the ocean"
-                value={formData.word}
-                onChange={(e) => setFormData({...formData, word: e.target.value})}
-                className={`w-full px-4 py-3 rounded-lg ${isDarkMode ? 'bg-slate-700 text-white' : 'bg-gray-100'} focus:outline-none focus:ring-2 focus:ring-cyan-500`}
-              />
-            </div>
-            <button
-              onClick={handleSubmit}
-              className="w-full py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:from-cyan-600 hover:to-blue-700 transition-all transform hover:scale-105"
-            >
-              Submit 🌊
-            </button>
-          </div>
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
 
-          {guestbookEntries.length > 0 && (
-            <div className="space-y-4">
-              <h3 className="text-2xl font-light mb-6">Recent Footprints</h3>
-              {guestbookEntries.map((entry) => (
-                <div key={entry.id} className={`p-6 rounded-lg ${isDarkMode ? 'bg-slate-700' : 'bg-gray-50'}`}>
-                  <p className="font-medium mb-2">{entry.name}</p>
-                  <p className="opacity-75 mb-1">Loves: {entry.beach}</p>
-                  <p className="opacity-75 mb-1">Prefers: {entry.preference}</p>
-                  <p className="opacity-75">Ocean word: <span className="italic">{entry.word}</span></p>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
+        .theme-toggle:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
 
-      {/* Resources Section */}
-      <section id="resources" className={`py-20 px-4 ${isDarkMode ? 'bg-slate-900' : 'bg-stone-50'}`}>
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-light mb-12 text-center">Resources 📚</h2>
-          <div className="space-y-6">
-            <div className={`p-6 rounded-lg ${isDarkMode ? 'bg-slate-800' : 'bg-white'}`}>
-              <h3 className="text-xl font-medium mb-4">Images</h3>
-              <p>Gradients generated using Tailwind CSS utilities - no external images needed</p>
-            </div>
-            <div className={`p-6 rounded-lg ${isDarkMode ? 'bg-slate-800' : 'bg-white'}`}>
-              <h3 className="text-xl font-medium mb-4">Fonts</h3>
-              <p>System fonts optimized for web performance (no external font loading)</p>
-            </div>
-            <div className={`p-6 rounded-lg ${isDarkMode ? 'bg-slate-800' : 'bg-white'}`}>
-              <h3 className="text-xl font-medium mb-4">Icons</h3>
-              <p>Lucide React - open source icon library</p>
-            </div>
-            <div className={`p-6 rounded-lg ${isDarkMode ? 'bg-slate-800' : 'bg-white'}`}>
-              <h3 className="text-xl font-medium mb-4">Framework</h3>
-              <p>React with Tailwind CSS for styling and responsive design</p>
-            </div>
-            <div className={`p-6 rounded-lg ${isDarkMode ? 'bg-slate-800' : 'bg-white'}`}>
-              <h3 className="text-xl font-medium mb-4">AI Assistance</h3>
-              <p className="mb-2">This project was built with assistance from Claude (Anthropic)</p>
-              <p className="opacity-75 text-sm">Prompt: "Build a coastal-themed personal portfolio website with gallery, guestbook, smooth animations, and fully responsive design following the beach/ocean aesthetic"</p>
-            </div>
-          </div>
-        </div>
-      </section>
+        body.dark-mode .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
 
-      {/* Footer */}
-      <footer className={`py-8 text-center ${isDarkMode ? 'bg-slate-800' : 'bg-white'}`}>
-        <p className="opacity-75">Made with 🌊 by Marcus</p>
-      </footer>
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
 
-      <style>{`
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(to bottom, #e0f2fe, #bae6fd);
+        }
+
+        body.dark-mode .hero {
+            background: linear-gradient(to bottom, #1e293b, #0f172a);
+        }
+
+        .wave {
+            position: absolute;
+            width: 200%;
+            height: 100px;
+            background: rgba(6, 182, 212, 0.2);
+            border-radius: 50%;
+            animation: wave 4s ease-in-out infinite;
+        }
+
+        .wave:nth-child(2) {
+            animation-delay: 0.5s;
+            bottom: 20%;
+        }
+
+        .wave:nth-child(3) {
+            animation-delay: 1s;
+            bottom: 40%;
+        }
+
         @keyframes wave {
-          0%, 100% { transform: translateX(-50%) translateY(0); }
-          50% { transform: translateX(-50%) translateY(-20px); }
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-20px); }
         }
-        
-        @keyframes fade-in {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .animate-fade-in {
-          animation: fade-in 1s ease-out;
-        }
-      `}</style>
-    </div>
-  );
-};
 
-export default CoastalPortfolio;
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            padding: 2rem;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 300;
+            margin-bottom: 1rem;
+            letter-spacing: 3px;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            font-weight: 300;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .scroll-indicator {
+            animation: bounce 2s infinite;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        section {
+            padding: 5rem 2rem;
+        }
+
+        .section-light {
+            background: #ffffff;
+        }
+
+        .section-dark-bg {
+            background: #faf8f3;
+        }
+
+        body.dark-mode .section-light {
+            background: #1e293b;
+        }
+
+        body.dark-mode .section-dark-bg {
+            background: #0f172a;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .about-card {
+            padding: 2rem;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            transition: transform 0.3s;
+        }
+
+        body.dark-mode .about-card {
+            background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
+        }
+
+        .about-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .about-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .about-card p {
+            opacity: 0.9;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-bg {
+            position: absolute;
+            inset: 0;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover .gallery-bg {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0);
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+            transition: background 0.3s;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .gallery-caption {
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-weight: 300;
+        }
+
+        .gallery-item:hover .gallery-caption {
+            opacity: 1;
+        }
+
+        .guestbook-form {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 8px;
+            border: none;
+            background: #f1f5f9;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        body.dark-mode input,
+        body.dark-mode select {
+            background: #334155;
+            color: #f1f5f9;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.3);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(to right, #06b6d4, #0284c7);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.02);
+        }
+
+        .entries {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .entry {
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            background: #f1f5f9;
+        }
+
+        body.dark-mode .entry {
+            background: #334155;
+        }
+
+        .entry-name {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .entry-detail {
+            opacity: 0.75;
+            margin-bottom: 0.3rem;
+        }
+
+        .resources-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .resource-card {
+            padding: 1.5rem;
+            border-radius: 8px;
+            background: white;
+        }
+
+        body.dark-mode .resource-card {
+            background: #1e293b;
+        }
+
+        .resource-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            opacity: 0.75;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 1rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+
+            body.dark-mode .nav-links.active {
+                background: #1e293b;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="light-mode">
+    <div id="app">
+        <nav v-bind:class="{ scrolled: scrolled }">
+            <div class="nav-container">
+                <div class="logo">Marcus</div>
+                <div class="nav-links" v-bind:class="{ active: menuOpen }">
+                    <a v-on:click="scrollTo('home')">🌅 Home</a>
+                    <a v-on:click="scrollTo('about')">🌊 About</a>
+                    <a v-on:click="scrollTo('gallery')">🐚 Gallery</a>
+                    <a v-on:click="scrollTo('guestbook')">📝 Guestbook</a>
+                    <a v-on:click="scrollTo('resources')">📚 Resources</a>
+                    <button class="theme-toggle" v-on:click="toggleTheme">
+                        {{ darkMode ? '☀️' : '🌙' }}
+                    </button>
+                </div>
+                <button class="mobile-menu-btn" v-on:click="toggleMenu">
+                    {{ menuOpen ? '✕' : '☰' }}
+                </button>
+            </div>
+        </nav>
+
+        <section id="home" class="hero">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="hero-content">
+                <h1>Hi, I'm Marcus</h1>
+                <p>A coastal soul who loves clean code and calm design</p>
+                <div class="scroll-indicator" v-on:click="scrollTo('about')">↓</div>
+            </div>
+        </section>
+
+        <section id="about" class="section-light">
+            <div class="container">
+                <h2>About Me 🌊</h2>
+                <div class="about-grid">
+                    <div class="about-card">
+                        <h3>Who I Am</h3>
+                        <p>A student developer exploring the intersection of design and technology, always seeking simplicity in complexity.</p>
+                    </div>
+                    <div class="about-card">
+                        <h3>Why the Coast</h3>
+                        <p>I'm most creative when things feel calm — that's why I'm drawn to beaches, minimal layouts, and clean code.</p>
+                    </div>
+                    <div class="about-card">
+                        <h3>What I Build</h3>
+                        <p>Thoughtful web experiences that prioritize user experience, accessibility, and aesthetic harmony.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery" class="section-dark-bg">
+            <div class="container">
+                <h2>Coastal Gallery 🐚</h2>
+                <div class="gallery-grid">
+                    <div v-for="item in gallery" v-bind:key="item.id" class="gallery-item">
+                        <div class="gallery-bg" v-bind:style="{ background: item.gradient }"></div>
+                        <div class="gallery-overlay">
+                            <p class="gallery-caption">{{ item.caption }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="guestbook" class="section-light">
+            <div class="container">
+                <h2>Leave a Footprint in the Sand 🐾</h2>
+                <p style="text-align: center; margin-bottom: 3rem; opacity: 0.75;">Share your coastal thoughts with me</p>
+                
+                <div class="guestbook-form">
+                    <div class="form-group">
+                        <input v-model="form.name" type="text" placeholder="Your Name">
+                    </div>
+                    <div class="form-group">
+                        <input v-model="form.beach" type="text" placeholder="What beach do you love most?">
+                    </div>
+                    <div class="form-group">
+                        <select v-model="form.preference">
+                            <option value="sunrise">Sunrise 🌅</option>
+                            <option value="sunset">Sunset 🌇</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input v-model="form.word" type="text" placeholder="One word that reminds you of the ocean">
+                    </div>
+                    <button class="submit-btn" v-on:click="submitEntry">Submit 🌊</button>
+                </div>
+
+                <div v-if="entries.length > 0" class="entries">
+                    <h3 style="margin-bottom: 2rem; font-weight: 300;">Recent Footprints</h3>
+                    <div v-for="entry in entries" v-bind:key="entry.id" class="entry">
+                        <p class="entry-name">{{ entry.name }}</p>
+                        <p class="entry-detail">Loves: {{ entry.beach }}</p>
+                        <p class="entry-detail">Prefers: {{ entry.preference }}</p>
+                        <p class="entry-detail">Ocean word: <em>{{ entry.word }}</em></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="resources" class="section-dark-bg">
+            <div class="container">
+                <h2>Resources 📚</h2>
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <h3>Images</h3>
+                        <p>CSS gradients - no external images needed</p>
+                    </div>
+                    <div class="resource-card">
+                        <h3>Fonts</h3>
+                        <p>System fonts for optimal performance</p>
+                    </div>
+                    <div class="resource-card">
+                        <h3>Framework</h3>
+                        <p>Vue.js 3 from CDN (https://cdn.jsdelivr.net/npm/vue@3.3.4/)</p>
+                    </div>
+                    <div class="resource-card">
+                        <h3>AI Assistance</h3>
+                        <p>Built with Claude (Anthropic) - claude.ai</p>
+                        <p style="opacity: 0.75; font-size: 0.9rem; margin-top: 0.5rem;">Prompt: "Build a coastal-themed personal portfolio with Vue.js gallery, guestbook, animations, and responsive design"</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="section-light">
+            <p>Made with 🌊 by Marcus</p>
+        </footer>
+    </div>
+
+    <script>
+        var app = Vue.createApp({
+            data: function() {
+                return {
+                    darkMode: false,
+                    scrolled: false,
+                    menuOpen: false,
+                    form: {
+                        name: '',
+                        beach: '',
+                        preference: 'sunrise',
+                        word: ''
+                    },
+                    entries: [],
+                    gallery: [
+                        { id: 1, caption: 'Sunset = design inspiration', gradient: 'linear-gradient(135deg, #fb923c, #ec4899)' },
+                        { id: 2, caption: 'Blue tones calm my mind', gradient: 'linear-gradient(135deg, #60a5fa, #06b6d4)' },
+                        { id: 3, caption: 'Waves teach patience', gradient: 'linear-gradient(135deg, #2dd4bf, #2563eb)' },
+                        { id: 4, caption: 'Golden hour magic', gradient: 'linear-gradient(135deg, #fde047, #fb923c)' },
+                        { id: 5, caption: 'Deep ocean mystery', gradient: 'linear-gradient(135deg, #6366f1, #1e40af)' },
+                        { id: 6, caption: 'Sand textures inspire', gradient: 'linear-gradient(135deg, #fde68a, #fdba74)' }
+                    ]
+                };
+            },
+            mounted: function() {
+                var self = this;
+                window.addEventListener('scroll', function() {
+                    self.scrolled = window.scrollY > 50;
+                });
+            },
+            methods: {
+                handleScroll: function() {
+                    this.scrolled = window.scrollY > 50;
+                },
+                toggleTheme: function() {
+                    this.darkMode = !this.darkMode;
+                    document.body.className = this.darkMode ? 'dark-mode' : 'light-mode';
+                },
+                toggleMenu: function() {
+                    this.menuOpen = !this.menuOpen;
+                },
+                scrollTo: function(id) {
+                    var element = document.getElementById(id);
+                    if (element) {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                    }
+                    this.menuOpen = false;
+                },
+                submitEntry: function() {
+                    if (this.form.name && this.form.beach && this.form.word) {
+                        var newEntry = {
+                            name: this.form.name,
+                            beach: this.form.beach,
+                            preference: this.form.preference,
+                            word: this.form.word,
+                            id: Date.now()
+                        };
+                        this.entries.push(newEntry);
+                        this.form.name = '';
+                        this.form.beach = '';
+                        this.form.preference = 'sunrise';
+                        this.form.word = '';
+                    }
+                }
+            }
+        });
+        
+        app.mount('#app');
+    </script>
+</body>
+</html>
