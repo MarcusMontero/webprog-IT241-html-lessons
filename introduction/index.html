@@ -398,6 +398,36 @@
             opacity: 0.75;
         }
 
+        /* Audio Player Styles */
+        .audio-player {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 1000;
+        }
+
+        .audio-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #06b6d4, #0284c7);
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .audio-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode .audio-toggle {
+            background: linear-gradient(135deg, #334155, #1e293b);
+        }
+
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -425,35 +455,6 @@
 
             section {
                 padding: 3rem 1rem;
-            }
-            
-            .audio-player {
-                position: fixed;
-                bottom: 2rem;
-                right: 2rem;
-                z-index: 1000;
-            }
-
-            .audio-toggle {
-                width: 60px;
-                height: 60px;
-                border-radius: 50%;
-                border: none;
-                background: linear-gradient(135deg, #06b6d4, #0284c7);
-                color: white;
-                font-size: 1.5rem;
-                cursor: pointer;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-                transition: transform 0.3s, box-shadow 0.3s;
-            }
-
-            .audio-toggle:hover {
-                transform: scale(1.1);
-                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-            }
-
-            body.dark-mode .audio-toggle {
-                background: linear-gradient(135deg, #334155, #1e293b);
             }
         }
     </style>
@@ -603,12 +604,12 @@
                     </div>
                     <div class="resource-card">
                         <h3>Background Music</h3>
-                        <p><strong>Track:</strong> [Song Name]</p>
-                        <p><strong>Artist:</strong> [Artist Name]</p>
-                        <p><strong>Source:</strong> [YouTube Audio Library / Bensound / etc.]</p>
-                        <p><strong>License:</strong> Creative Commons / Royalty-Free</p>
+                        <p><strong>Track:</strong> Montego</p>
+                        <p><strong>Artist:</strong> [Update with actual artist name]</p>
+                        <p><strong>Source:</strong> [Update with source - YouTube Audio Library / etc.]</p>
+                        <p><strong>License:</strong> Royalty-Free</p>
                         <p style="opacity: 0.75; font-size: 0.9rem; margin-top: 0.5rem;">
-                            Licensed under Creative Commons Attribution
+                            Licensed for free use with attribution
                         </p>
                     </div>
                 </div>
@@ -652,9 +653,6 @@
                 });
             },
             methods: {
-                handleScroll: function() {
-                    this.scrolled = window.scrollY > 50;
-                },
                 toggleTheme: function() {
                     this.darkMode = !this.darkMode;
                     document.body.className = this.darkMode ? 'dark-mode' : 'light-mode';
@@ -683,6 +681,7 @@
                         this.form.beach = '';
                         this.form.preference = 'sunrise';
                         this.form.word = '';
+                    }
                 },
                 toggleAudio: function() {
                     var audio = this.$refs.bgMusic;
