@@ -313,6 +313,225 @@
             text-align: center;
         }
 
+        /* Education Section Styles */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #06b6d4, #0284c7);
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 20% 1fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            position: relative;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .timeline-item:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .timeline-item:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+
+        .timeline-item:nth-child(3) {
+            animation-delay: 0.5s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .timeline-date {
+            text-align: right;
+            padding-right: 2rem;
+            position: relative;
+        }
+
+        .timeline-date::after {
+            content: '';
+            position: absolute;
+            right: -0.5rem;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            background: #06b6d4;
+            border-radius: 50%;
+            border: 3px solid #faf8f3;
+            box-shadow: 0 0 0 3px #06b6d4;
+        }
+
+        body.dark-mode .timeline-date::after {
+            border-color: #0f172a;
+        }
+
+        .year {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #0a2540;
+            font-family: 'Fraunces', serif;
+        }
+
+        body.dark-mode .year {
+            color: #f1f5f9;
+        }
+
+        .timeline-content {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        body.dark-mode .timeline-content {
+            background: #1e293b;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(6, 182, 212, 0.2);
+        }
+
+        .school-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .school-logo {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .school-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 0.5rem;
+        }
+
+        .school-logo.playing {
+            animation: pulse 1.5s infinite;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .school-logo::before {
+            content: '🎵';
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .school-logo:hover::before {
+            opacity: 0.3;
+        }
+
+        .school-info h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #0a2540;
+        }
+
+        body.dark-mode .school-info h2 {
+            color: #f1f5f9;
+        }
+
+        .school-level {
+            color: #06b6d4;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .school-description {
+            opacity: 0.8;
+            line-height: 1.8;
+        }
+
+        .audio-indicator {
+            margin-top: 1rem;
+            padding: 0.75rem 1rem;
+            background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+            border-radius: 8px;
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #0a2540;
+        }
+
+        .audio-indicator.active {
+            display: flex;
+        }
+
+        .wave {
+            display: inline-block;
+            width: 3px;
+            height: 12px;
+            background: #06b6d4;
+            margin: 0 2px;
+            animation: wave 1s infinite ease-in-out;
+        }
+
+        .wave:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .wave:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        @keyframes wave {
+            0%, 100% {
+                height: 12px;
+            }
+            50% {
+                height: 20px;
+            }
+        }
+
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -635,6 +854,32 @@
             section {
                 padding: 3rem 1rem;
             }
+
+            .timeline::before {
+                left: 1.5rem;
+            }
+
+            .timeline-item {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                padding-left: 3rem;
+            }
+
+            .timeline-date {
+                text-align: left;
+                padding-right: 0;
+                padding-left: 2rem;
+            }
+
+            .timeline-date::after {
+                left: -2.5rem;
+                right: auto;
+            }
+
+            .school-header {
+                flex-direction: column;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -647,6 +892,7 @@
                     <a v-on:click="scrollTo('home')">Home</a>
                     <a v-on:click="scrollTo('about')">About</a>
                     <a v-on:click="scrollTo('skills')">Skills</a>
+                    <a v-on:click="scrollTo('education')">Education</a>
                     <a v-on:click="scrollTo('gallery')">Gallery</a>
                     <a v-on:click="scrollTo('guestbook')">Guestbook</a>
                     <a v-on:click="scrollTo('resources')">Resources</a>
@@ -738,7 +984,50 @@
             </div>
         </section>
 
-        <section id="gallery" class="section-light">
+        <section id="education" class="section-light">
+            <div class="container">
+                <h2>My Educational Journey</h2>
+                <p style="text-align: center; margin-bottom: 3rem; opacity: 0.75;">Click on school logos to hear their hymns</p>
+
+                <div class="timeline">
+                    <div v-for="school in schools" v-bind:key="school.id" class="timeline-item">
+                        <div class="timeline-date">
+                            <div class="year">{{ school.years }}</div>
+                        </div>
+
+                        <div class="timeline-content">
+                            <div class="school-header">
+                                <div class="school-logo" 
+                                     v-bind:class="{ playing: currentPlaying === school.id }"
+                                     v-on:click="toggleHymn(school.id)">
+                                    <img v-if="school.logo" v-bind:src="school.logo" v-bind:alt="school.name">
+                                    <span v-else>{{ school.emoji }}</span>
+                                </div>
+                                <div class="school-info">
+                                    <h2>{{ school.name }}</h2>
+                                    <div class="school-level">{{ school.level }}</div>
+                                </div>
+                            </div>
+
+                            <p class="school-description">{{ school.description }}</p>
+
+                            <div class="audio-indicator" v-bind:class="{ active: currentPlaying === school.id }">
+                                <span>🎵 Playing School Hymn</span>
+                                <span class="wave"></span>
+                                <span class="wave"></span>
+                                <span class="wave"></span>
+                            </div>
+
+                            <audio v-bind:ref="'audio' + school.id">
+                                <source v-bind:src="school.hymn" type="audio/mpeg">
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery" class="section-dark-bg">
             <div class="container">
                 <h2>Coastal Gallery</h2>
                 <div class="gallery-grid">
@@ -753,7 +1042,7 @@
             </div>
         </section>
 
-        <section id="guestbook" class="section-dark-bg">
+        <section id="guestbook" class="section-light">
             <div class="container">
                 <h2>Leave a Footprint in the Sand</h2>
                 <p style="text-align: center; margin-bottom: 3rem; opacity: 0.75;">Share your coastal thoughts with me</p>
@@ -789,7 +1078,7 @@
             </div>
         </section>
 
-        <section id="resources" class="section-light">
+        <section id="resources" class="section-dark-bg">
             <div class="container">
                 <h2>Resources</h2>
                 <div class="resources-grid">
@@ -829,6 +1118,7 @@
                     scrolled: false,
                     menuOpen: false,
                     audioPlaying: false,
+                    currentPlaying: null,
                     form: {
                         name: '',
                         beach: '',
@@ -937,6 +1227,38 @@
                         { id: 2, caption: 'Ocean waves', image: 'photo2.jpg' },
                         { id: 3, caption: 'Sandy shores', image: 'photo3.jpg' },
                         { id: 4, caption: 'Coastal view', image: 'photo4.jpg' }
+                    ],
+                    schools: [
+                        {
+                            id: 1,
+                            name: 'La Immaculada Concepcion School',
+                            level: 'Grade School - Junior High',
+                            years: '20XX - 20XX',
+                            emoji: '🎓',
+                            logo: '',
+                            hymn: '',
+                            description: 'My foundational years of education where I developed core academic skills and discovered my love for learning.'
+                        },
+                        {
+                            id: 2,
+                            name: 'Colegio De San Juan De Letran',
+                            level: 'Senior High School',
+                            years: '20XX - 20XX',
+                            emoji: '📚',
+                            logo: '',
+                            hymn: '',
+                            description: 'Advanced my studies in preparation for college, focusing on STEM subjects and building critical thinking skills.'
+                        },
+                        {
+                            id: 3,
+                            name: 'Asia Pacific College',
+                            level: 'Bachelor of Science in Information Technology',
+                            years: '2024 - Present',
+                            emoji: '💻',
+                            logo: '',
+                            hymn: '',
+                            description: 'Currently pursuing my degree in Information Technology, developing expertise in web development, programming, and digital innovation.'
+                        }
                     ]
                 };
             },
@@ -997,6 +1319,34 @@
                         audio.play();
                         this.audioPlaying = true;
                     }
+                },
+                toggleHymn: function(schoolId) {
+                    var self = this;
+                    var audioRef = this.$refs['audio' + schoolId][0];
+                    
+                    if (this.currentPlaying === schoolId) {
+                        audioRef.pause();
+                        audioRef.currentTime = 0;
+                        this.currentPlaying = null;
+                        return;
+                    }
+                    
+                    if (this.currentPlaying !== null) {
+                        var currentAudio = this.$refs['audio' + this.currentPlaying][0];
+                        currentAudio.pause();
+                        currentAudio.currentTime = 0;
+                    }
+                    
+                    this.currentPlaying = schoolId;
+                    audioRef.play().catch(function(error) {
+                        console.log('Audio play failed:', error);
+                        alert('Please add the hymn audio file for: ' + self.schools.find(function(s) { return s.id === schoolId; }).name);
+                        self.currentPlaying = null;
+                    });
+                    
+                    audioRef.onended = function() {
+                        self.currentPlaying = null;
+                    };
                 }
             }
         });
