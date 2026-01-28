@@ -891,8 +891,8 @@
                 <div class="nav-links" v-bind:class="{ active: menuOpen }">
                     <a v-on:click="scrollTo('home')">Home</a>
                     <a v-on:click="scrollTo('about')">About</a>
-                    <a v-on:click="scrollTo('skills')">Skills</a>
                     <a v-on:click="scrollTo('education')">Education</a>
+                    <a v-on:click="scrollTo('skills')">Skills</a>
                     <a v-on:click="scrollTo('gallery')">Gallery</a>
                     <a v-on:click="scrollTo('guestbook')">Guestbook</a>
                     <a v-on:click="scrollTo('resources')">Resources</a>
@@ -968,23 +968,7 @@
             </div>
         </section>
 
-        <section id="skills" class="section-dark-bg">
-            <div class="container">
-                <h2>My Skills</h2>
-                <p style="text-align: center; margin-bottom: 3rem; opacity: 0.75;">Technologies and tools I work with</p>
-
-                <div class="skills-grid">
-                    <div v-for="skill in skills" 
-                         v-bind:key="skill.name" 
-                         class="skill-card">
-                        <div class="skill-icon" v-html="skill.icon"></div>
-                        <p class="skill-name">{{ skill.name }}</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="education" class="section-light">
+        <section id="education" class="section-dark-bg">
             <div class="container">
                 <h2>My Educational Journey</h2>
                 <p style="text-align: center; margin-bottom: 3rem; opacity: 0.75;">Click on school logos to hear their hymns</p>
@@ -1022,6 +1006,22 @@
                                 <source v-bind:src="school.hymn" type="audio/mpeg">
                             </audio>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="section-light">
+            <div class="container">
+                <h2>My Skills</h2>
+                <p style="text-align: center; margin-bottom: 3rem; opacity: 0.75;">Technologies and tools I work with</p>
+
+                <div class="skills-grid">
+                    <div v-for="skill in skills" 
+                         v-bind:key="skill.name" 
+                         class="skill-card">
+                        <div class="skill-icon" v-html="skill.icon"></div>
+                        <p class="skill-name">{{ skill.name }}</p>
                     </div>
                 </div>
             </div>
