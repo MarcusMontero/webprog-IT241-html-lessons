@@ -229,10 +229,64 @@
             margin-bottom: 3rem;
         }
 
+        .about-container {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .profile-photo-container {
+            flex: 0 0 300px;
+            aspect-ratio: 3 / 4;
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        body.dark-mode .profile-photo-container {
+            background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
+        }
+
+        .profile-photo-container:hover {
+            transform: translateY(-5px);
+        }
+
+        .profile-photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-photo-placeholder {
+            font-size: 4rem;
+            opacity: 0.5;
+        }
+
         .about-grid {
+            flex: 1;
+            min-width: 300px;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .about-container {
+                flex-direction: column;
+            }
+            
+            .profile-photo-container {
+                flex: 0 0 auto;
+                width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
+            }
         }
 
         .about-card {
@@ -918,8 +972,12 @@
             </div>
         </div>
 
-        <audio ref="bgMusic" loop>
+        <audio ref="bgMusicLight" loop>
             <source src="BOB_MARLEY.mp3" type="audio/mpeg">
+        </audio>
+        
+        <audio ref="bgMusicDark" loop>
+            <source src="SZA_GOODDAYS.mp3" type="audio/mpeg">
         </audio>
         
         <section id="home" class="hero">
@@ -945,24 +1003,30 @@
         <section id="about" class="section-light">
             <div class="container">
                 <h2>About Me</h2>
-                <div class="about-grid">
-                    <div class="about-card">
-                        <h3>Education & Achievements</h3>
-                        <p><strong>Grade School - Junior High:</strong> La Immaculada Concepcion School</p>
-                        <p><strong>Senior High:</strong> Colegio De San Juan De Letran</p>
-                        <p><strong>College:</strong> Asia Pacific College</p>
-                        <p><strong>Course:</strong> Bachelor of Science in Information Technology</p>
-                        <p><strong>IT Experience:</strong> Code Combat</p>
+                <div class="about-container">
+                    <div class="profile-photo-container">
+                        <!-- Replace the placeholder below with: <img src="your-photo.jpg" alt="Profile Photo"> -->
+                        <img src="profile-photo.png" alt="Profile Photo">
                     </div>
-                    <div class="about-card">
-                        <h3>Hobbies & Interests</h3>
-                        <p>When I'm not coding, you'll find me playing basketball or tending to my fish tanks. I love the balance between the active energy of sports and the peaceful calm of fish keeping.</p>
-                        <p>I'm most creative when things feel calm — that's why I'm drawn to beaches, minimal layouts, and clean code.</p>
-                    </div>
-                    <div class="about-card">
-                        <h3>Goals & Dreams</h3>
-                        <p>To succeed in IT, stay healthy, and make my loved ones proud.</p>
-                        <p>I'm passionate about building thoughtful web experiences that prioritize user experience, accessibility, and aesthetic harmony.</p>
+                    <div class="about-grid">
+                        <div class="about-card">
+                            <h3>Education & Achievements</h3>
+                            <p><strong>Grade School - Junior High:</strong> La Immaculada Concepcion School</p>
+                            <p><strong>Senior High:</strong> Colegio De San Juan De Letran</p>
+                            <p><strong>College:</strong> Asia Pacific College</p>
+                            <p><strong>Course:</strong> Bachelor of Science in Information Technology</p>
+                            <p><strong>IT Experience:</strong> Code Combat</p>
+                        </div>
+                        <div class="about-card">
+                            <h3>Hobbies & Interests</h3>
+                            <p>When I'm not coding, you'll find me playing basketball or tending to my fish tanks. I love the balance between the active energy of sports and the peaceful calm of fish keeping.</p>
+                            <p>I'm most creative when things feel calm — that's why I'm drawn to beaches, minimal layouts, and clean code.</p>
+                        </div>
+                        <div class="about-card">
+                            <h3>Goals & Dreams</h3>
+                            <p>To succeed in IT, stay healthy, and make my loved ones proud.</p>
+                            <p>I'm passionate about building thoughtful web experiences that prioritize user experience, accessibility, and aesthetic harmony.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1115,6 +1179,7 @@
             data: function() {
                 return {
                     darkMode: false,
+                    previousDarkMode: false,
                     scrolled: false,
                     menuOpen: false,
                     audioPlaying: false,
@@ -1267,11 +1332,41 @@
                 window.addEventListener('scroll', function() {
                     self.scrolled = window.scrollY > 50;
                 });
+                
+                // Autoplay music on load (light theme by default)
+                setTimeout(function() {
+                    var audio = self.$refs.bgMusicLight;
+                    var record = document.querySelector('.record');
+                    
+                    audio.play().then(function() {
+                        record.classList.add('playing');
+                        self.audioPlaying = true;
+                    }).catch(function(error) {
+                        console.log('Autoplay prevented:', error);
+                        // Autoplay might be blocked by browser, user needs to interact
+                    });
+                }, 500);
             },
             methods: {
                 toggleTheme: function() {
+                    this.previousDarkMode = this.darkMode;
                     this.darkMode = !this.darkMode;
                     document.body.className = this.darkMode ? 'dark-mode' : 'light-mode';
+                    
+                    // Switch audio based on theme
+                    if (this.audioPlaying) {
+                        var oldAudio = this.previousDarkMode ? this.$refs.bgMusicDark : this.$refs.bgMusicLight;
+                        var newAudio = this.darkMode ? this.$refs.bgMusicDark : this.$refs.bgMusicLight;
+                        
+                        // Store current time and pause old audio
+                        oldAudio.pause();
+                        oldAudio.currentTime = 0;
+                        
+                        // Play new audio
+                        newAudio.play().catch(function(error) {
+                            console.log('Audio play failed:', error);
+                        });
+                    }
                 },
                 toggleMenu: function() {
                     this.menuOpen = !this.menuOpen;
@@ -1300,7 +1395,7 @@
                     }
                 },
                 toggleAudio: function() {
-                    var audio = this.$refs.bgMusic;
+                    var audio = this.darkMode ? this.$refs.bgMusicDark : this.$refs.bgMusicLight;
                     var record = document.querySelector('.record');
                     
                     if (this.audioPlaying) {
