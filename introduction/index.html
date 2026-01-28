@@ -159,62 +159,6 @@
             z-index: 10;
             padding: 2rem;
             animation: fadeIn 1s ease-out;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 4rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .hero-text {
-            flex: 1;
-            text-align: left;
-        }
-
-        .hero-image {
-            flex: 1;
-            max-width: 500px;
-            position: relative;
-        }
-
-        .hero-image img {
-            width: 100%;
-            height: auto;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-            transition: all 0.5s ease;
-            opacity: 0.95;
-        }
-
-        body.dark-mode .hero-image img {
-            mix-blend-mode: luminosity;
-            opacity: 0.85;
-            filter: contrast(1.1) brightness(0.9);
-        }
-
-        body.light-mode .hero-image img {
-            opacity: 0.9;
-            filter: contrast(1.05) brightness(1.05);
-        }
-
-        .hero-image img:hover {
-            transform: scale(1.02);
-            box-shadow: 0 25px 80px rgba(6, 182, 212, 0.3);
-        }
-
-        .hero-image::before {
-            content: '';
-            position: absolute;
-            inset: -20px;
-            background: radial-gradient(circle at center, rgba(6, 182, 212, 0.15), transparent 70%);
-            border-radius: 20px;
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-
-        .hero-image:hover::before {
-            opacity: 1;
         }
 
         @keyframes fadeIn {
@@ -936,25 +880,6 @@
                 flex-direction: column;
                 text-align: center;
             }
-
-            .hero-content {
-                flex-direction: column;
-                gap: 2rem;
-            }
-
-            .hero-text {
-                text-align: center;
-            }
-
-            .hero-text h1,
-            .hero-text p {
-                text-align: center;
-            }
-
-            .hero-image {
-                max-width: 350px;
-                margin: 0 auto;
-            }
         }
     </style>
 </head>
@@ -1011,14 +936,9 @@
             <div class="hero-overlay"></div>
     
             <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Hi, I'm Marcus</h1>
-                    <p>A coastal soul who loves clean code and calm design</p>
-                    <div class="scroll-indicator" v-on:click="scrollTo('about')">↓</div>
-                </div>
-                <div class="hero-image">
-                    <img src="marcus-diving-board.png" alt="Marcus sitting on diving board over ocean">
-                </div>
+                <h1>Hi, I'm Marcus</h1>
+                <p>A coastal soul who loves clean code and calm design</p>
+                <div class="scroll-indicator" v-on:click="scrollTo('about')">↓</div>
             </div>
         </section>
 
