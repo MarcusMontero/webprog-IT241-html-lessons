@@ -331,17 +331,20 @@
         .skill-card {
             padding: 2rem 1rem;
             border-radius: 12px;
-            background: white;
+            background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
+            color: #f1f5f9;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 1rem;
             transition: all 0.3s;
             cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
         body.dark-mode .skill-card {
-            background: #1e293b;
+            background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
         }
 
         .skill-card:hover {
@@ -1286,7 +1289,7 @@
             </div>
         </section>
 
-        <section id="skills" class="section-dark-bg">
+        <section id="skills" class="section-light">
             <div class="container">
                 <h2>My Skills</h2>
                 <p style="text-align: center; margin-bottom: 3rem; opacity: 0.75;">Technologies and tools I work with</p>
@@ -1302,7 +1305,7 @@
             </div>
         </section>
 
-        <section id="gallery" class="section-light">
+        <section id="gallery" class="section-dark-bg">
             <div class="container">
                 <h2>Coastal Gallery</h2>
                 <div class="gallery-grid">
