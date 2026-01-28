@@ -1010,22 +1010,16 @@
                     </div>
                     <div class="about-grid">
                         <div class="about-card">
-                            <h3>Education & Achievements</h3>
-                            <p><strong>Grade School - Junior High:</strong> La Immaculada Concepcion School</p>
-                            <p><strong>Senior High:</strong> Colegio De San Juan De Letran</p>
-                            <p><strong>College:</strong> Asia Pacific College</p>
-                            <p><strong>Course:</strong> Bachelor of Science in Information Technology</p>
-                            <p><strong>IT Experience:</strong> Code Combat</p>
+                            <h3>Who I Am</h3>
+                            <p>A student developer exploring the intersection of design and technology, always seeking simplicity in complexity.</p>
                         </div>
                         <div class="about-card">
-                            <h3>Hobbies & Interests</h3>
-                            <p>When I'm not coding, you'll find me playing basketball or tending to my fish tanks. I love the balance between the active energy of sports and the peaceful calm of fish keeping.</p>
+                            <h3>Why the Coast</h3>
                             <p>I'm most creative when things feel calm — that's why I'm drawn to beaches, minimal layouts, and clean code.</p>
                         </div>
                         <div class="about-card">
-                            <h3>Goals & Dreams</h3>
-                            <p>To succeed in IT, stay healthy, and make my loved ones proud.</p>
-                            <p>I'm passionate about building thoughtful web experiences that prioritize user experience, accessibility, and aesthetic harmony.</p>
+                            <h3>What I Build</h3>
+                            <p>Thoughtful web experiences that prioritize user experience, accessibility, and aesthetic harmony.</p>
                         </div>
                     </div>
                 </div>
@@ -1334,18 +1328,41 @@
                 });
                 
                 // Autoplay music on load (light theme by default)
-                setTimeout(function() {
+                this.$nextTick(function() {
                     var audio = self.$refs.bgMusicLight;
                     var record = document.querySelector('.record');
+                    var tonearm = document.querySelector('.tonearm');
                     
+                    // Start playing automatically
                     audio.play().then(function() {
                         record.classList.add('playing');
+                        tonearm.classList.add('active');
                         self.audioPlaying = true;
                     }).catch(function(error) {
-                        console.log('Autoplay prevented:', error);
-                        // Autoplay might be blocked by browser, user needs to interact
+                        console.log('Autoplay prevented by browser. Music will play on first user interaction.');
+                        
+                        // Fallback: start on any user interaction
+                        var startAudio = function() {
+                            if (!self.audioPlaying) {
+                                audio.play().then(function() {
+                                    record.classList.add('playing');
+                                    tonearm.classList.add('active');
+                                    self.audioPlaying = true;
+                                }).catch(function(err) {
+                                    console.log('Audio play failed:', err);
+                                });
+                            }
+                            // Remove listeners after first successful play
+                            document.removeEventListener('click', startAudio);
+                            document.removeEventListener('keydown', startAudio);
+                            document.removeEventListener('scroll', startAudio);
+                        };
+                        
+                        document.addEventListener('click', startAudio, { once: true });
+                        document.addEventListener('keydown', startAudio, { once: true });
+                        document.addEventListener('scroll', startAudio, { once: true });
                     });
-                }, 500);
+                });
             },
             methods: {
                 toggleTheme: function() {
@@ -1397,10 +1414,12 @@
                 toggleAudio: function() {
                     var audio = this.darkMode ? this.$refs.bgMusicDark : this.$refs.bgMusicLight;
                     var record = document.querySelector('.record');
+                    var tonearm = document.querySelector('.tonearm');
                     
                     if (this.audioPlaying) {
                         record.classList.remove('playing');
                         record.classList.add('stopping');
+                        tonearm.classList.remove('active');
                         
                         setTimeout(function() {
                             audio.pause();
@@ -1411,6 +1430,7 @@
                     } else {
                         record.classList.remove('stopping');
                         record.classList.add('playing');
+                        tonearm.classList.add('active');
                         audio.play();
                         this.audioPlaying = true;
                     }
