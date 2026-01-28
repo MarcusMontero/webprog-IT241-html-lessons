@@ -744,6 +744,217 @@
             opacity: 0.75;
         }
 
+        /* Block Blast Game Styles */
+        .game-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode .game-info {
+            background: #1e293b;
+        }
+
+        .game-stat {
+            text-align: center;
+        }
+
+        .game-stat-label {
+            font-size: 0.9rem;
+            opacity: 0.75;
+            margin-bottom: 0.5rem;
+        }
+
+        .game-stat-value {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #06b6d4;
+        }
+
+        .game-board {
+            display: inline-grid;
+            grid-template-columns: repeat(8, 45px);
+            grid-template-rows: repeat(8, 45px);
+            gap: 3px;
+            padding: 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        body.dark-mode .game-board {
+            background: #1e293b;
+        }
+
+        .game-cell {
+            width: 45px;
+            height: 45px;
+            background: #f1f5f9;
+            border-radius: 4px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        body.dark-mode .game-cell {
+            background: #334155;
+        }
+
+        .game-cell.filled {
+            background: linear-gradient(135deg, #06b6d4, #0284c7);
+            box-shadow: 0 2px 4px rgba(6, 182, 212, 0.3);
+        }
+
+        .game-cell.preview {
+            background: rgba(6, 182, 212, 0.3);
+        }
+
+        .game-cell.invalid {
+            background: rgba(239, 68, 68, 0.3);
+        }
+
+        .game-pieces {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .game-piece {
+            display: grid;
+            gap: 3px;
+            padding: 1rem;
+            background: white;
+            border-radius: 12px;
+            cursor: grab;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode .game-piece {
+            background: #1e293b;
+        }
+
+        .game-piece:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(6, 182, 212, 0.2);
+        }
+
+        .game-piece.selected {
+            transform: scale(1.1);
+            box-shadow: 0 8px 24px rgba(6, 182, 212, 0.4);
+        }
+
+        .game-piece.used {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .piece-cell {
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+        }
+
+        .piece-cell.filled {
+            background: linear-gradient(135deg, #06b6d4, #0284c7);
+        }
+
+        .game-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .game-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(to right, #06b6d4, #0284c7);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .game-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .game-btn.secondary {
+            background: #64748b;
+        }
+
+        .game-over {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            z-index: 1001;
+            animation: gameOverPop 0.5s ease-out;
+        }
+
+        body.dark-mode .game-over {
+            background: #1e293b;
+        }
+
+        @keyframes gameOverPop {
+            0% {
+                transform: translate(-50%, -50%) scale(0.5);
+                opacity: 0;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .game-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            .game-board {
+                grid-template-columns: repeat(8, 35px);
+                grid-template-rows: repeat(8, 35px);
+            }
+            
+            .game-cell {
+                width: 35px;
+                height: 35px;
+            }
+            
+            .piece-cell {
+                width: 25px;
+                height: 25px;
+            }
+            
+            .game-pieces {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
         /* Audio Player Styles */
         .audio-player {
             position: fixed;
@@ -1010,16 +1221,22 @@
                     </div>
                     <div class="about-grid">
                         <div class="about-card">
-                            <h3>Who I Am</h3>
-                            <p>A student developer exploring the intersection of design and technology, always seeking simplicity in complexity.</p>
+                            <h3>Education & Achievements</h3>
+                            <p><strong>Grade School - Junior High:</strong> La Immaculada Concepcion School</p>
+                            <p><strong>Senior High:</strong> Colegio De San Juan De Letran</p>
+                            <p><strong>College:</strong> Asia Pacific College</p>
+                            <p><strong>Course:</strong> Bachelor of Science in Information Technology</p>
+                            <p><strong>IT Experience:</strong> Code Combat</p>
                         </div>
                         <div class="about-card">
-                            <h3>Why the Coast</h3>
+                            <h3>Hobbies & Interests</h3>
+                            <p>When I'm not coding, you'll find me playing basketball or tending to my fish tanks. I love the balance between the active energy of sports and the peaceful calm of fish keeping.</p>
                             <p>I'm most creative when things feel calm — that's why I'm drawn to beaches, minimal layouts, and clean code.</p>
                         </div>
                         <div class="about-card">
-                            <h3>What I Build</h3>
-                            <p>Thoughtful web experiences that prioritize user experience, accessibility, and aesthetic harmony.</p>
+                            <h3>Goals & Dreams</h3>
+                            <p>To succeed in IT, stay healthy, and make my loved ones proud.</p>
+                            <p>I'm passionate about building thoughtful web experiences that prioritize user experience, accessibility, and aesthetic harmony.</p>
                         </div>
                     </div>
                 </div>
@@ -1100,7 +1317,74 @@
             </div>
         </section>
 
-        <section id="guestbook" class="section-light">
+        <section id="blockblast" class="section-light">
+            <div class="container">
+                <h2>🌊 Ocean Block Blast 🌊</h2>
+                <p style="text-align: center; margin-bottom: 3rem; opacity: 0.75;">Place blocks on the grid. Clear rows or columns to score points!</p>
+                
+                <div class="game-container">
+                    <div class="game-info">
+                        <div class="game-stat">
+                            <div class="game-stat-label">Score</div>
+                            <div class="game-stat-value">{{ game.score }}</div>
+                        </div>
+                        <div class="game-stat">
+                            <div class="game-stat-label">Best</div>
+                            <div class="game-stat-value">{{ game.bestScore }}</div>
+                        </div>
+                        <div class="game-stat">
+                            <div class="game-stat-label">Moves</div>
+                            <div class="game-stat-value">{{ game.moves }}</div>
+                        </div>
+                    </div>
+
+                    <div class="game-board">
+                        <div v-for="(cell, index) in game.board" 
+                             v-bind:key="index"
+                             class="game-cell"
+                             v-bind:class="{ 
+                                 filled: cell, 
+                                 preview: game.previewCells.includes(index),
+                                 invalid: game.invalidCells.includes(index)
+                             }"
+                             v-on:click="placePiece(index)"
+                             v-on:mouseenter="showPreview(index)"
+                             v-on:mouseleave="clearPreview">
+                        </div>
+                    </div>
+
+                    <div class="game-pieces">
+                        <div v-for="(piece, pIndex) in game.pieces" 
+                             v-bind:key="pIndex"
+                             class="game-piece"
+                             v-bind:class="{ selected: game.selectedPiece === pIndex, used: piece.used }"
+                             v-bind:style="{ gridTemplateColumns: 'repeat(' + piece.width + ', 30px)' }"
+                             v-on:click="selectPiece(pIndex)">
+                            <div v-for="(cell, cIndex) in piece.shape" 
+                                 v-bind:key="cIndex"
+                                 class="piece-cell"
+                                 v-bind:class="{ filled: cell }">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="game-controls">
+                        <button class="game-btn" v-on:click="newGame">New Game</button>
+                    </div>
+                </div>
+
+                <div v-if="game.gameOver" class="game-overlay" v-on:click="game.gameOver = false"></div>
+                <div v-if="game.gameOver" class="game-over">
+                    <h2 style="margin-bottom: 1rem; font-size: 2rem;">🎮 Game Over!</h2>
+                    <p style="font-size: 1.2rem; margin-bottom: 0.5rem;">Final Score: <strong>{{ game.score }}</strong></p>
+                    <p v-if="game.score === game.bestScore && game.score > 0" style="color: #06b6d4; margin-bottom: 2rem;">🎉 New Best Score! 🎉</p>
+                    <p v-else style="opacity: 0.75; margin-bottom: 2rem;">Best: {{ game.bestScore }}</p>
+                    <button class="game-btn" v-on:click="newGame">Play Again</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="guestbook" class="section-dark-bg">
             <div class="container">
                 <h2>Leave a Footprint in the Sand</h2>
                 <p style="text-align: center; margin-bottom: 3rem; opacity: 0.75;">Share your coastal thoughts with me</p>
@@ -1185,6 +1469,17 @@
                         word: ''
                     },
                     entries: [],
+                    game: {
+                        board: Array(64).fill(false),
+                        score: 0,
+                        bestScore: 0,
+                        moves: 0,
+                        pieces: [],
+                        selectedPiece: null,
+                        previewCells: [],
+                        invalidCells: [],
+                        gameOver: false
+                    },
                     skills: [
                         { 
                             name: 'HTML', 
@@ -1363,6 +1658,9 @@
                         document.addEventListener('scroll', startAudio, { once: true });
                     });
                 });
+                
+                // Initialize game
+                this.initGame();
             },
             methods: {
                 toggleTheme: function() {
@@ -1462,6 +1760,216 @@
                     audioRef.onended = function() {
                         self.currentPlaying = null;
                     };
+                },
+                initGame: function() {
+                    this.game.board = Array(64).fill(false);
+                    this.game.score = 0;
+                    this.game.moves = 0;
+                    this.game.selectedPiece = null;
+                    this.game.previewCells = [];
+                    this.game.invalidCells = [];
+                    this.game.gameOver = false;
+                    this.generatePieces();
+                    
+                    // Load best score from localStorage
+                    var saved = localStorage.getItem('blockBlastBestScore');
+                    if (saved) {
+                        this.game.bestScore = parseInt(saved);
+                    }
+                },
+                generatePieces: function() {
+                    var shapes = [
+                        { shape: [1], width: 1 },
+                        { shape: [1, 1], width: 2 },
+                        { shape: [1, 1, 1], width: 3 },
+                        { shape: [1, 1, 1, 1], width: 4 },
+                        { shape: [1, 0, 1, 1], width: 2 },
+                        { shape: [1, 1, 1, 0], width: 2 },
+                        { shape: [1, 1, 0, 1], width: 2 },
+                        { shape: [1, 1, 1, 1, 0, 1], width: 2 },
+                        { shape: [1, 1, 1, 1, 1], width: 1 },
+                        { shape: [1, 1, 1, 1], width: 2 },
+                        { shape: [1, 1, 1, 0, 1, 0], width: 3 },
+                        { shape: [1, 0, 1, 1, 1, 1], width: 3 }
+                    ];
+                    
+                    this.game.pieces = [];
+                    for (var i = 0; i < 3; i++) {
+                        var randomShape = shapes[Math.floor(Math.random() * shapes.length)];
+                        this.game.pieces.push({
+                            shape: randomShape.shape.slice(),
+                            width: randomShape.width,
+                            used: false
+                        });
+                    }
+                },
+                selectPiece: function(index) {
+                    if (this.game.pieces[index].used) return;
+                    this.game.selectedPiece = index;
+                },
+                showPreview: function(cellIndex) {
+                    if (this.game.selectedPiece === null) return;
+                    
+                    var piece = this.game.pieces[this.game.selectedPiece];
+                    if (piece.used) return;
+                    
+                    var row = Math.floor(cellIndex / 8);
+                    var col = cellIndex % 8;
+                    var cells = [];
+                    var invalid = false;
+                    
+                    for (var i = 0; i < piece.shape.length; i++) {
+                        if (piece.shape[i]) {
+                            var pieceRow = Math.floor(i / piece.width);
+                            var pieceCol = i % piece.width;
+                            var targetRow = row + pieceRow;
+                            var targetCol = col + pieceCol;
+                            var targetIndex = targetRow * 8 + targetCol;
+                            
+                            if (targetRow >= 8 || targetCol >= 8 || this.game.board[targetIndex]) {
+                                invalid = true;
+                            }
+                            cells.push(targetIndex);
+                        }
+                    }
+                    
+                    if (invalid) {
+                        this.game.invalidCells = cells;
+                        this.game.previewCells = [];
+                    } else {
+                        this.game.previewCells = cells;
+                        this.game.invalidCells = [];
+                    }
+                },
+                clearPreview: function() {
+                    this.game.previewCells = [];
+                    this.game.invalidCells = [];
+                },
+                placePiece: function(cellIndex) {
+                    if (this.game.selectedPiece === null) return;
+                    if (this.game.invalidCells.length > 0) return;
+                    if (this.game.previewCells.length === 0) return;
+                    
+                    var piece = this.game.pieces[this.game.selectedPiece];
+                    if (piece.used) return;
+                    
+                    // Place the piece
+                    for (var i = 0; i < this.game.previewCells.length; i++) {
+                        this.game.board[this.game.previewCells[i]] = true;
+                    }
+                    
+                    piece.used = true;
+                    this.game.moves++;
+                    this.game.selectedPiece = null;
+                    this.clearPreview();
+                    
+                    // Check for cleared lines
+                    this.checkClearedLines();
+                    
+                    // Check if all pieces are used
+                    var allUsed = this.game.pieces.every(function(p) { return p.used; });
+                    if (allUsed) {
+                        this.generatePieces();
+                    }
+                    
+                    // Check game over
+                    this.checkGameOver();
+                },
+                checkClearedLines: function() {
+                    var clearedCount = 0;
+                    var cellsToClear = [];
+                    
+                    // Check rows
+                    for (var row = 0; row < 8; row++) {
+                        var filled = true;
+                        for (var col = 0; col < 8; col++) {
+                            if (!this.game.board[row * 8 + col]) {
+                                filled = false;
+                                break;
+                            }
+                        }
+                        if (filled) {
+                            clearedCount++;
+                            for (var col = 0; col < 8; col++) {
+                                cellsToClear.push(row * 8 + col);
+                            }
+                        }
+                    }
+                    
+                    // Check columns
+                    for (var col = 0; col < 8; col++) {
+                        var filled = true;
+                        for (var row = 0; row < 8; row++) {
+                            if (!this.game.board[row * 8 + col]) {
+                                filled = false;
+                                break;
+                            }
+                        }
+                        if (filled) {
+                            clearedCount++;
+                            for (var row = 0; row < 8; row++) {
+                                var idx = row * 8 + col;
+                                if (!cellsToClear.includes(idx)) {
+                                    cellsToClear.push(idx);
+                                }
+                            }
+                        }
+                    }
+                    
+                    if (clearedCount > 0) {
+                        // Clear cells
+                        for (var i = 0; i < cellsToClear.length; i++) {
+                            this.game.board[cellsToClear[i]] = false;
+                        }
+                        
+                        // Add score
+                        this.game.score += clearedCount * 10 + cellsToClear.length;
+                        
+                        // Update best score
+                        if (this.game.score > this.game.bestScore) {
+                            this.game.bestScore = this.game.score;
+                            localStorage.setItem('blockBlastBestScore', this.game.bestScore);
+                        }
+                    }
+                },
+                checkGameOver: function() {
+                    var self = this;
+                    // Check if any remaining piece can be placed
+                    var canPlace = this.game.pieces.some(function(piece) {
+                        if (piece.used) return false;
+                        
+                        // Try to place at each position
+                        for (var cellIndex = 0; cellIndex < 64; cellIndex++) {
+                            var row = Math.floor(cellIndex / 8);
+                            var col = cellIndex % 8;
+                            var valid = true;
+                            
+                            for (var i = 0; i < piece.shape.length; i++) {
+                                if (piece.shape[i]) {
+                                    var pieceRow = Math.floor(i / piece.width);
+                                    var pieceCol = i % piece.width;
+                                    var targetRow = row + pieceRow;
+                                    var targetCol = col + pieceCol;
+                                    
+                                    if (targetRow >= 8 || targetCol >= 8 || self.game.board[targetRow * 8 + targetCol]) {
+                                        valid = false;
+                                        break;
+                                    }
+                                }
+                            }
+                            
+                            if (valid) return true;
+                        }
+                        
+                        return false;
+                    });
+                    
+                    if (!canPlace) {
+                        this.game.gameOver = true;
+                    }
+                },
+                newGame: function() {
+                    this.initGame();
                 }
             }
         });
