@@ -231,22 +231,23 @@
 
         .about-container {
             display: flex;
-            gap: 2rem;
+            gap: 3rem;
             align-items: flex-start;
             flex-wrap: wrap;
         }
 
         .profile-photo-container {
-            flex: 0 0 300px;
+            flex: 0 0 350px;
             aspect-ratio: 3 / 4;
             background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
-            border-radius: 12px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
             transition: transform 0.3s;
+            position: relative;
         }
 
         body.dark-mode .profile-photo-container {
@@ -254,7 +255,8 @@
         }
 
         .profile-photo-container:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 32px rgba(6, 182, 212, 0.3);
         }
 
         .profile-photo-container img {
@@ -291,17 +293,21 @@
 
         .about-card {
             padding: 2rem;
-            border-radius: 12px;
+            border-radius: 16px;
             background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
-            transition: transform 0.3s;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 2px solid rgba(6, 182, 212, 0.1);
         }
 
         body.dark-mode .about-card {
             background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
+            border: 2px solid rgba(6, 182, 212, 0.2);
         }
 
         .about-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(6, 182, 212, 0.3);
         }
 
         .about-card h3 {
@@ -646,6 +652,60 @@
             opacity: 1;
         }
 
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            cursor: pointer;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: zoomIn 0.3s ease-out;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            color: white;
+            font-size: 3rem;
+            font-weight: 300;
+            cursor: pointer;
+            z-index: 2001;
+            transition: transform 0.3s;
+        }
+
+        .lightbox-close:hover {
+            transform: rotate(90deg);
+        }
+
         .guestbook-form {
             max-width: 600px;
             margin: 0 auto 3rem;
@@ -722,9 +782,11 @@
         }
 
         .resources-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .resource-card {
@@ -735,6 +797,8 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             transition: transform 0.3s;
             border: 2px solid rgba(6, 182, 212, 0.2);
+            display: flex;
+            flex-direction: column;
         }
 
         body.dark-mode .resource-card {
@@ -834,6 +898,12 @@
             background: linear-gradient(135deg, #06b6d4, #0284c7);
             box-shadow: 0 2px 4px rgba(6, 182, 212, 0.3);
             border: 1px solid #0891b2;
+        }
+
+        body.dark-mode .game-cell.filled {
+            background: linear-gradient(135deg, #22d3ee, #06b6d4);
+            box-shadow: 0 4px 8px rgba(34, 211, 238, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+            border: 2px solid #22d3ee;
         }
 
         .game-cell.preview {
@@ -1248,6 +1318,10 @@
         <section id="about" class="section-light">
             <div class="container">
                 <h2>About Me</h2>
+                <p style="text-align: center; max-width: 800px; margin: 0 auto 3rem; font-size: 1.1rem; opacity: 0.85;">
+                    Welcome to my digital space! I'm a passionate IT student with a love for creating beautiful, functional web experiences. 
+                    Like the ocean waves that inspire me, I believe in finding balance between creativity and structure in everything I build.
+                </p>
                 <div class="about-container">
                     <div class="profile-photo-container">
                         <!-- Replace the placeholder below with: <img src="your-photo.jpg" alt="Profile Photo"> -->
@@ -1340,7 +1414,7 @@
             <div class="container">
                 <h2>Coastal Gallery</h2>
                 <div class="gallery-grid">
-                    <div v-for="item in gallery" v-bind:key="item.id" class="gallery-item">
+                    <div v-for="item in gallery" v-bind:key="item.id" class="gallery-item" v-on:click="openLightbox(item)">
                         <div v-if="item.image" class="gallery-bg" v-bind:style="{ backgroundImage: 'url(' + item.image + ')' }"></div>
                         <div v-else class="gallery-bg" v-bind:style="{ background: item.gradient }"></div>
                         <div class="gallery-overlay">
@@ -1350,6 +1424,19 @@
                 </div>
             </div>
         </section>
+
+        <!-- Lightbox -->
+        <div class="lightbox" v-bind:class="{ active: lightbox.show }" v-on:click="closeLightbox">
+            <span class="lightbox-close">&times;</span>
+            <div v-if="lightbox.currentItem.image" 
+                 class="lightbox-content" 
+                 v-bind:style="{ backgroundImage: 'url(' + lightbox.currentItem.image + ')', backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', width: '80vw', height: '80vh' }">
+            </div>
+            <div v-else 
+                 class="lightbox-content" 
+                 v-bind:style="{ background: lightbox.currentItem.gradient, width: '80vw', height: '80vh', borderRadius: '12px' }">
+            </div>
+        </div>
 
         <section id="blockblast" class="section-light">
             <div class="container">
@@ -1513,6 +1600,10 @@
                         previewCells: [],
                         invalidCells: [],
                         gameOver: false
+                    },
+                    lightbox: {
+                        show: false,
+                        currentItem: {}
                     },
                     skills: [
                         { 
@@ -2004,6 +2095,14 @@
                 },
                 newGame: function() {
                     this.initGame();
+                },
+                openLightbox: function(item) {
+                    this.lightbox.currentItem = item;
+                    this.lightbox.show = true;
+                },
+                closeLightbox: function() {
+                    this.lightbox.show = false;
+                    this.lightbox.currentItem = {};
                 }
             }
         });
