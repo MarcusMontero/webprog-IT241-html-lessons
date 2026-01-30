@@ -87,40 +87,128 @@
             }
         }
 
-        /* Wave Animation */
+        /* Wave Animation - MASSIVE WAVE */
         .wave-container {
             position: absolute;
-            bottom: -100%;
+            bottom: -120%;
             left: 0;
             width: 100%;
-            height: 100%;
+            height: 120%;
             display: flex;
-            align-items: center;
+            align-items: flex-end;
             justify-content: center;
-            font-family: monospace;
-            font-size: clamp(0.5rem, 2vw, 1rem);
-            line-height: 1;
-            color: #06b6d4;
-            white-space: pre;
             overflow: hidden;
-            text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
-            transition: bottom 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: bottom 1.8s cubic-bezier(0.33, 0, 0.2, 1);
+            z-index: 10;
         }
 
         .wave-container.active {
             bottom: 0;
         }
 
-        .wave-ascii {
-            animation: waveFlow 2s ease-in-out infinite;
+        .massive-wave {
+            width: 150%;
+            height: 100%;
+            background: linear-gradient(
+                to top,
+                #0891b2 0%,
+                #06b6d4 30%,
+                #22d3ee 60%,
+                rgba(34, 211, 238, 0.8) 80%,
+                rgba(34, 211, 238, 0.3) 100%
+            );
+            position: relative;
+            animation: waveRise 1.8s cubic-bezier(0.33, 0, 0.2, 1) forwards;
         }
 
-        @keyframes waveFlow {
+        .massive-wave::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -50%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                transparent 0%,
+                rgba(255, 255, 255, 0.3) 50%,
+                rgba(255, 255, 255, 0.5) 70%,
+                rgba(255, 255, 255, 0.2) 100%
+            );
+            animation: waveFoam 2s ease-in-out infinite;
+        }
+
+        .wave-crest {
+            position: absolute;
+            top: -80px;
+            left: 0;
+            width: 200%;
+            height: 120px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,50 Q150,0 300,50 T600,50 T900,50 T1200,50 L1200,120 L0,120 Z" fill="%2322d3ee" opacity="0.8"/><path d="M0,70 Q200,30 400,70 T800,70 T1200,70 L1200,120 L0,120 Z" fill="%2306b6d4" opacity="0.6"/></svg>');
+            background-repeat: repeat-x;
+            background-size: 1200px 120px;
+            animation: waveCrest 3s linear infinite;
+        }
+
+        @keyframes waveRise {
+            0% {
+                transform: translateY(100%);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes waveFoam {
             0%, 100% {
-                transform: translateX(0) scale(1);
+                transform: translateX(0) scaleY(1);
             }
             50% {
-                transform: translateX(-10px) scale(1.05);
+                transform: translateX(-10%) scaleY(1.1);
+            }
+        }
+
+        @keyframes waveCrest {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-600px);
+            }
+        }
+
+        /* Wash away animation for sand letters */
+        .washing-away .sand-letter {
+            animation: washAway 0.8s ease-out forwards;
+        }
+
+        @keyframes washAway {
+            0% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg) translateY(0);
+            }
+            50% {
+                opacity: 0.7;
+                transform: scale(0.8) rotate(15deg) translateY(-20px);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.3) rotate(45deg) translateY(100px);
+            }
+        }
+
+        .washing-away .sand-line {
+            animation: lineWash 0.6s ease-out forwards;
+        }
+
+        @keyframes lineWash {
+            0% {
+                opacity: 1;
+                transform: translateX(0) translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(50px) translateY(50px);
             }
         }
 
@@ -1497,12 +1585,9 @@
 
         <!-- Wave Animation -->
         <div id="waveContainer" class="wave-container">
-            <pre class="wave-ascii">
-   ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~
-  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~
- ~  ~  ~ 🌊 ~  ~  ~  ~  ~ 🌊 ~  ~  ~  ~  ~  ~
-~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~
-            </pre>
+            <div class="massive-wave">
+                <div class="wave-crest"></div>
+            </div>
         </div>
 
         <!-- Click Prompt -->
@@ -1874,17 +1959,24 @@
         function triggerWave() {
             const waveContainer = document.getElementById('waveContainer');
             const introOverlay = document.getElementById('introOverlay');
+            const activeVersion = document.getElementById('version' + currentVersion);
+            const sandcastleText = activeVersion.querySelector('.sandcastle-text');
             
-            // Trigger wave
-            waveContainer.classList.add('active');
+            // Add washing away animation to text
+            sandcastleText.classList.add('washing-away');
             
-            // After wave animation, hide intro
+            // Trigger massive wave
+            setTimeout(() => {
+                waveContainer.classList.add('active');
+            }, 300);
+            
+            // After wave covers screen, fade to main page
             setTimeout(() => {
                 introOverlay.classList.add('hidden');
                 setTimeout(() => {
                     introOverlay.style.display = 'none';
                 }, 500);
-            }, 2000);
+            }, 2500);
         }
 
         // Initialize on load
