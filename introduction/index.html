@@ -37,6 +37,8 @@
         .sandcastle-container {
             text-align: center;
             padding: 2rem;
+            position: relative;
+            z-index: 1;
         }
 
         .sandcastle-text {
@@ -99,7 +101,7 @@
             justify-content: center;
             overflow: hidden;
             transition: bottom 1.8s cubic-bezier(0.33, 0, 0.2, 1);
-            z-index: 10;
+            z-index: 999;
         }
 
         .wave-container.active {
