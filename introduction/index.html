@@ -12,6 +12,195 @@
     
     <script src="https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.js"></script>
     <style>
+        /* ========== INTRO ANIMATION STYLES ========== */
+        .intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #e0f2fe, #bae6fd);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s;
+        }
+
+        .intro-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Sand Castle Text Animation (Version 2) */
+        .sandcastle-container {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .sandcastle-text {
+            font-size: clamp(2rem, 6vw, 4rem);
+            font-family: 'Fraunces', serif;
+            color: #d4a574;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            margin-bottom: 2rem;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .sand-line {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: buildSand 0.8s ease-out forwards;
+        }
+
+        @keyframes buildSand {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .sand-letter {
+            display: inline-block;
+            opacity: 0;
+            transform: scale(0) rotate(-10deg);
+            animation: popSand 0.3s ease-out forwards;
+        }
+
+        @keyframes popSand {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(-10deg);
+            }
+            50% {
+                transform: scale(1.2) rotate(5deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        /* Wave Animation */
+        .wave-container {
+            position: absolute;
+            bottom: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: monospace;
+            font-size: clamp(0.5rem, 2vw, 1rem);
+            line-height: 1;
+            color: #06b6d4;
+            white-space: pre;
+            overflow: hidden;
+            text-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
+            transition: bottom 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .wave-container.active {
+            bottom: 0;
+        }
+
+        .wave-ascii {
+            animation: waveFlow 2s ease-in-out infinite;
+        }
+
+        @keyframes waveFlow {
+            0%, 100% {
+                transform: translateX(0) scale(1);
+            }
+            50% {
+                transform: translateX(-10px) scale(1.05);
+            }
+        }
+
+        /* Click Prompt */
+        .click-prompt {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #0891b2;
+            font-size: 1.2rem;
+            font-weight: 500;
+            opacity: 0;
+            animation: fadeInBounce 1s ease-out 3s forwards;
+            cursor: pointer;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .click-prompt:hover {
+            transform: translateX(-50%) scale(1.05);
+            box-shadow: 0 8px 24px rgba(6, 182, 212, 0.3);
+        }
+
+        @keyframes fadeInBounce {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        .click-prompt.pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: translateX(-50%) scale(1);
+            }
+            50% {
+                transform: translateX(-50%) scale(1.05);
+            }
+        }
+
+        /* Version Toggle (for demo) */
+        .version-toggle {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .version-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #06b6d4;
+            border-radius: 8px;
+            color: #0891b2;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .version-btn:hover,
+        .version-btn.active {
+            background: #06b6d4;
+            color: white;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -1253,6 +1442,75 @@
     </style>
 </head>
 <body class="light-mode">
+    <!-- Intro Animation Overlay -->
+    <div id="introOverlay" class="intro-overlay">
+        <!-- Version Toggle -->
+        <div class="version-toggle">
+            <button class="version-btn active" onclick="switchVersion(1)">Version 1</button>
+            <button class="version-btn" onclick="switchVersion(2)">Version 2</button>
+        </div>
+
+        <!-- Version 1: Simple Text Wave -->
+        <div id="version1" class="sandcastle-container">
+            <div class="sandcastle-text">
+                <div class="sand-line">
+                    <span class="sand-letter">W</span><span class="sand-letter">e</span><span class="sand-letter">l</span><span class="sand-letter">c</span><span class="sand-letter">o</span><span class="sand-letter">m</span><span class="sand-letter">e</span>
+                </div>
+                <div class="sand-line">
+                    <span class="sand-letter">t</span><span class="sand-letter">o</span>
+                </div>
+                <div class="sand-line">
+                    <span class="sand-letter">M</span><span class="sand-letter">y</span>
+                    <span class="sand-letter"> </span>
+                    <span class="sand-letter">C</span><span class="sand-letter">o</span><span class="sand-letter">a</span><span class="sand-letter">s</span><span class="sand-letter">t</span><span class="sand-letter">a</span><span class="sand-letter">l</span>
+                </div>
+                <div class="sand-line">
+                    <span class="sand-letter">P</span><span class="sand-letter">o</span><span class="sand-letter">r</span><span class="sand-letter">t</span><span class="sand-letter">f</span><span class="sand-letter">o</span><span class="sand-letter">l</span><span class="sand-letter">i</span><span class="sand-letter">o</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Version 2: Sand Castle Building -->
+        <div id="version2" class="sandcastle-container" style="display: none;">
+            <div class="sandcastle-text">
+                <div class="sand-line">
+                    <span class="sand-letter">🏖</span><span class="sand-letter">️</span>
+                </div>
+                <div class="sand-line">
+                    <span class="sand-letter">B</span><span class="sand-letter">u</span><span class="sand-letter">i</span><span class="sand-letter">l</span><span class="sand-letter">d</span><span class="sand-letter">i</span><span class="sand-letter">n</span><span class="sand-letter">g</span>
+                    <span class="sand-letter"> </span>
+                    <span class="sand-letter">M</span><span class="sand-letter">y</span>
+                </div>
+                <div class="sand-line">
+                    <span class="sand-letter">S</span><span class="sand-letter">a</span><span class="sand-letter">n</span><span class="sand-letter">d</span>
+                    <span class="sand-letter"> </span>
+                    <span class="sand-letter">C</span><span class="sand-letter">a</span><span class="sand-letter">s</span><span class="sand-letter">t</span><span class="sand-letter">l</span><span class="sand-letter">e</span>
+                </div>
+                <div class="sand-line">
+                    <span class="sand-letter">D</span><span class="sand-letter">r</span><span class="sand-letter">e</span><span class="sand-letter">a</span><span class="sand-letter">m</span><span class="sand-letter">s</span>
+                </div>
+                <div class="sand-line">
+                    <span class="sand-letter">🏰</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wave Animation -->
+        <div id="waveContainer" class="wave-container">
+            <pre class="wave-ascii">
+   ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~
+  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~
+ ~  ~  ~ 🌊 ~  ~  ~  ~  ~ 🌊 ~  ~  ~  ~  ~  ~
+~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~  ~
+            </pre>
+        </div>
+
+        <!-- Click Prompt -->
+        <div class="click-prompt pulse" onclick="triggerWave()">
+            Click anywhere to dive in 🌊
+        </div>
+    </div>
+
     <div id="app">
         <nav v-bind:class="{ scrolled: scrolled }">
             <div class="nav-container">
@@ -1574,6 +1832,67 @@
     </div>
 
     <script>
+        // ========== INTRO ANIMATION LOGIC ==========
+        let currentVersion = 1;
+
+        // Animate sand letters on load
+        function animateSandLetters() {
+            const activeVersion = document.getElementById('version' + currentVersion);
+            const letters = activeVersion.querySelectorAll('.sand-letter');
+            letters.forEach((letter, index) => {
+                letter.style.animationDelay = (index * 0.05) + 's';
+            });
+            
+            const lines = activeVersion.querySelectorAll('.sand-line');
+            lines.forEach((line, index) => {
+                line.style.animationDelay = (index * 0.3) + 's';
+            });
+        }
+
+        // Switch between versions
+        function switchVersion(version) {
+            currentVersion = version;
+            
+            // Update buttons
+            document.querySelectorAll('.version-btn').forEach((btn, i) => {
+                btn.classList.toggle('active', i + 1 === version);
+            });
+            
+            // Switch visible version
+            document.getElementById('version1').style.display = version === 1 ? 'block' : 'none';
+            document.getElementById('version2').style.display = version === 2 ? 'block' : 'none';
+            
+            // Reset wave
+            const waveContainer = document.getElementById('waveContainer');
+            waveContainer.classList.remove('active');
+            
+            // Reanimate letters
+            animateSandLetters();
+        }
+
+        // Trigger wave animation and hide intro
+        function triggerWave() {
+            const waveContainer = document.getElementById('waveContainer');
+            const introOverlay = document.getElementById('introOverlay');
+            
+            // Trigger wave
+            waveContainer.classList.add('active');
+            
+            // After wave animation, hide intro
+            setTimeout(() => {
+                introOverlay.classList.add('hidden');
+                setTimeout(() => {
+                    introOverlay.style.display = 'none';
+                }, 500);
+            }, 2000);
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', () => {
+            animateSandLetters();
+        });
+
+        // ========== MAIN VUE APP ==========
         var app = Vue.createApp({
             data: function() {
                 return {
