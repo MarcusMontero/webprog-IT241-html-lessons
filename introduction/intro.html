@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Intro - Wave Version</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* Intro Screen */
+        #intro-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        #intro-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Sand Text Container */
+        .sand-text {
+            font-size: 3rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Individual Letter Styling */
+        .sand-letter {
+            display: inline-block;
+            opacity: 0;
+            position: relative;
+            color: #f4e4c1;
+            text-shadow: 
+                2px 2px 4px rgba(0,0,0,0.3),
+                0 0 10px rgba(244, 228, 193, 0.5);
+            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));
+        }
+
+        /* Sand particle animation for building effect */
+        @keyframes sandBuild {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) scale(0.5) rotate(10deg);
+                filter: blur(5px);
+            }
+            50% {
+                opacity: 0.7;
+                filter: blur(2px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0deg);
+                filter: blur(0);
+            }
+        }
+
+        .sand-letter.build {
+            animation: sandBuild 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        /* Proceed Button */
+        .proceed-btn {
+            margin-top: 3rem;
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            border-radius: 50px;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 3;
+        }
+
+        .proceed-btn.show {
+            opacity: 1;
+            animation: pulse 2s infinite;
+        }
+
+        .proceed-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 20px rgba(255, 255, 255, 0);
+            }
+        }
+
+        /* Wave Animation */
+        .wave-container {
+            position: absolute;
+            bottom: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(180deg, 
+                rgba(59, 130, 246, 0.9) 0%, 
+                rgba(37, 99, 235, 0.95) 50%, 
+                rgba(29, 78, 216, 1) 100%);
+            border-radius: 50% 50% 0 0;
+            animation: wave-rise 2s cubic-bezier(0.36, 0, 0.66, -0.56) forwards;
+        }
+
+        @keyframes wave-rise {
+            0% {
+                transform: translateY(100%) translateX(-50%);
+            }
+            100% {
+                transform: translateY(0) translateX(-50%);
+            }
+        }
+
+        .wave::before,
+        .wave::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            border-radius: inherit;
+        }
+
+        .wave::before {
+            left: -50%;
+            animation: wave-motion 3s ease-in-out infinite;
+        }
+
+        .wave::after {
+            left: -25%;
+            animation: wave-motion 4s ease-in-out infinite reverse;
+            opacity: 0.7;
+        }
+
+        @keyframes wave-motion {
+            0%, 100% {
+                transform: translateX(0) translateY(0);
+            }
+            50% {
+                transform: translateX(5%) translateY(-20px);
+            }
+        }
+
+        /* Sand Wash Away Effect */
+        @keyframes sandWash {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: translateY(30px) scale(0.9) rotate(5deg);
+                filter: blur(3px);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(100px) scale(0.5) rotate(10deg);
+                filter: blur(10px);
+            }
+        }
+
+        .sand-letter.wash {
+            animation: sandWash 0.6s cubic-bezier(0.36, 0, 0.66, -0.56) forwards;
+        }
+
+        /* Main Content */
+        #main-content {
+            opacity: 0;
+            transition: opacity 1s ease;
+            padding: 2rem;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #main-content.visible {
+            opacity: 1;
+        }
+
+        #main-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        #main-content p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sand-text {
+                font-size: 2rem;
+            }
+
+            .proceed-btn {
+                font-size: 1rem;
+                padding: 0.8rem 2rem;
+            }
+
+            #main-content h1 {
+                font-size: 2rem;
+            }
+
+            #main-content p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Intro Screen -->
+    <div id="intro-screen">
+        <div class="sand-text" id="sandText"></div>
+        <button class="proceed-btn" id="proceedBtn">Proceed</button>
+        <div class="wave-container" id="waveContainer"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content">
+        <h1>Welcome to My Personal Website</h1>
+        <p>
+            This is your main content area. The animated intro with wave effect 
+            has completed, and you're now viewing the main page. This creates a 
+            memorable entrance for your visitors!
+        </p>
+    </div>
+
+    <script>
+        // Configuration
+        const welcomeText = "Welcome to my website";
+        const buildDelay = 100; // milliseconds between each letter
+        const washDelay = 50; // milliseconds between washing each letter
+
+        // Elements
+        const sandTextEl = document.getElementById('sandText');
+        const proceedBtn = document.getElementById('proceedBtn');
+        const introScreen = document.getElementById('intro-screen');
+        const waveContainer = document.getElementById('waveContainer');
+        const mainContent = document.getElementById('main-content');
+
+        // Split text into letters and create span elements
+        function initializeSandText() {
+            const letters = welcomeText.split('');
+            sandTextEl.innerHTML = letters.map(letter => {
+                const span = `<span class="sand-letter">${letter === ' ' ? '&nbsp;' : letter}</span>`;
+                return span;
+            }).join('');
+        }
+
+        // Animate letters being built
+        function buildSandText() {
+            const letters = document.querySelectorAll('.sand-letter');
+            letters.forEach((letter, index) => {
+                setTimeout(() => {
+                    letter.classList.add('build');
+                    
+                    // Show proceed button after last letter
+                    if (index === letters.length - 1) {
+                        setTimeout(() => {
+                            proceedBtn.classList.add('show');
+                        }, 800);
+                    }
+                }, index * buildDelay);
+            });
+        }
+
+        // Wash away animation with wave
+        function washAwayText() {
+            // Disable button
+            proceedBtn.style.pointerEvents = 'none';
+            proceedBtn.style.opacity = '0';
+
+            // Create wave
+            const wave = document.createElement('div');
+            wave.className = 'wave';
+            waveContainer.appendChild(wave);
+
+            // Wash away letters
+            const letters = document.querySelectorAll('.sand-letter');
+            letters.forEach((letter, index) => {
+                setTimeout(() => {
+                    letter.classList.add('wash');
+                }, index * washDelay);
+            });
+
+            // Complete transition
+            setTimeout(() => {
+                introScreen.classList.add('hidden');
+                setTimeout(() => {
+                    introScreen.style.display = 'none';
+                    mainContent.classList.add('visible');
+                    document.body.style.overflow = 'auto';
+                }, 500);
+            }, 2000);
+        }
+
+        // Initialize and start
+        initializeSandText();
+        setTimeout(buildSandText, 300);
+
+        // Event listeners
+        proceedBtn.addEventListener('click', washAwayText);
+
+        // Optional: Click anywhere to proceed (after button appears)
+        let buttonShown = false;
+        setTimeout(() => {
+            buttonShown = true;
+        }, (welcomeText.length * buildDelay) + 1000);
+
+        introScreen.addEventListener('click', (e) => {
+            if (buttonShown && e.target !== proceedBtn && proceedBtn.classList.contains('show')) {
+                washAwayText();
+            }
+        });
+    </script>
+</body>
+</html>
